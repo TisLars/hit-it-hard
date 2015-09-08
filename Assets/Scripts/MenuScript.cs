@@ -15,7 +15,7 @@ public class MenuScript : MonoBehaviour {
 
     public void GoToLevelMenu()
     {
-        Application.LoadLevel(1);
+        Application.LoadLevel(2); // Set it to 2 for now (skip the level select)
         Debug.Log("Start level 1");
     }
 
