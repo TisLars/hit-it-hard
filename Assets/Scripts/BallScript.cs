@@ -13,7 +13,6 @@ public class BallScript : MonoBehaviour {
 
     void Awake () {
         level = GameObject.Find("Level").GetComponent<LevelScript>();
-        Invoke("HitBall", 1f);
         cam = Camera.main;
         amountOfHits = 0;
     }
