@@ -22,26 +22,26 @@ public class LevelScript : MonoBehaviour {
         GameObject levelText = GameObject.Find("LevelText");
         GameObject levelTextPanel = GameObject.Find("LevelTextPanel");
         string ruleText = "Level "+ Application.loadedLevel +"\n";
-        string wallText = "muren";
+        string wallText = "walls";
 
         if (minimalHitRule > 0)
         {
             if (minimalHitRule == 1)
             {
-                wallText = "muur";
+                wallText = "wall";
             }
-            ruleText += "Raak minimaal " + minimalHitRule + " " + wallText + "\n";
+            ruleText += "Hit at least " + minimalHitRule + " " + wallText + "\n";
         }
 
-        wallText = "muren"; // Reset it to Muren
+        wallText = "walls"; // Reset it to "walls"
 
         if (maximumHitRule > 0)
         {
             if (maximumHitRule == 1)
             {
-                wallText = "muur";
+                wallText = "wall";
             }
-            ruleText += "Raak maximaal " + maximumHitRule + " " + wallText + "\n";
+            ruleText += "Do not hit more than " + maximumHitRule + " " + wallText + "\n";
         }
 
         levelText.GetComponent<Text>().text = ruleText;
