@@ -2,14 +2,14 @@
 
 public class BallScript : MonoBehaviour {
 
-    LevelScript level;
+    private LevelScript level;
     private Camera cam;
-    Color current;
-    Color bgColor;
+    private Color current;
+    private Color bgColor;
 
-    int amountOfHits;
+    private int amountOfHits;
 
-    GameObject LosingScreen;
+    private GameObject LosingScreen;
 
     void Awake () {
         level = GameObject.Find("Level").GetComponent<LevelScript>();
@@ -17,31 +17,26 @@ public class BallScript : MonoBehaviour {
         amountOfHits = 0;
     }
 
-    private void HitBall()
-    {
-        GetComponent<Rigidbody2D>().AddForce(new Vector2(5f, 20f), ForceMode2D.Impulse);
-    }
-
     void OnCollisionEnter2D(Collision2D collider)
     {
         if (collider.gameObject.name.Contains("Wall"))
         {
-            if (amountOfHits < level.maximumHitRule)
+            if(amountOfHits >= level.maximumHitRule && level.maximumHitRule != 0)
             {
-                ChangeBackgroundColor();
-                amountOfHits++;
-            } else
+                KillIt();
+            }
+            else
             {
-                Destroy(gameObject);
-                Debug.Log("You lose! > LevelFailed()");
-                LevelFailed();
+                HitWall();
             }
         }
     }
 
-    private void LevelFailed()
+    void KillIt()
     {
-        
+        Destroy(gameObject);
+        Debug.Log("You lose! > LevelFailed()");
+        level.LevelFailed();
     }
 
     private void ChangeBackgroundColor()
@@ -49,5 +44,16 @@ public class BallScript : MonoBehaviour {
         current = new Color(Random.value, Random.value, Random.value);
         bgColor = new Color(Random.value, Random.value, Random.value);
         cam.backgroundColor = Color.Lerp(current, bgColor, 5.0f);
+    }
+
+    public int getAmountOfHits()
+    {
+        return amountOfHits;
+    }
+
+    void HitWall()
+    {
+        ChangeBackgroundColor();
+        amountOfHits++;
     }
 }

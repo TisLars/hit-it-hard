@@ -3,18 +3,25 @@ using System.Collections;
 
 public class Goal : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    private LevelScript level;
+    private BallScript ball;
+
+    void Awake()
+    {
+        ball = GameObject.Find("Ball").GetComponent<BallScript>();
+        level = GameObject.Find("Level").GetComponent<LevelScript>();
+    }
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        Debug.Log("complete");        
+        if (ball.getAmountOfHits() >= level.getMinHitRule())
+        {
+            level.LevelComplete();
+        }
+        else
+        {
+            level.LevelFailed();
+        }
+        
     }
 }
