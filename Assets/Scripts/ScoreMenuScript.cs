@@ -11,18 +11,24 @@ public class ScoreMenuScript : MonoBehaviour
     void Start()
     {
         returnButton = returnButton.GetComponent<Button>();
-
         scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
-        score = GameObject.Find("SessionScore").GetComponent<SessionScoreScript>();
-        
+
+        if(GameObject.Find("SessionScore"))
+        {
+            score = GameObject.Find("SessionScore").GetComponent<SessionScoreScript>();    
+        }
+
         SetScoreText();
     }
 
     void SetScoreText()
     {
-        scoreText.text = "Total wallhits: " + score.getScore();
-        scoreText.text += "\nThanks for playing!\n More Content Soon!";
-        score.setScore(0);
+        if(score)
+        {
+            scoreText.text = "Total wallhits: " + score.getScore();
+            score.setScore(0);
+        }
+        scoreText.text += "\nThanks for playing!\n More Content Coming Soon!";
     }
 
     public void ReturnToMenu()
