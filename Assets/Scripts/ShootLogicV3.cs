@@ -5,7 +5,7 @@ public class ShootLogicV3 : MonoBehaviour {
 
     public float maxDrag = 2.0f;
     public float lineWidth = 0.30f;
-    public int acceleration = 2;
+    public float acceleration = 2.0f;
 
     private float maxDragSqr;
 

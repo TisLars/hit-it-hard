@@ -6,11 +6,17 @@ public class SessionScoreScript : MonoBehaviour {
 
     public static SessionScoreScript session;
 
-    public BallScript ball;
-    int totalHits;
+    private BallScript ball = null;
+
+    int totalHits = 0;
 
     void Awake()
     {
+        if(GameObject.Find("Ball"))
+        {
+            ball = GameObject.Find("Ball").GetComponent<BallScript>();
+        } 
+
         if (!session)
         {
             session = this;
@@ -24,11 +30,16 @@ public class SessionScoreScript : MonoBehaviour {
 
     public void IncreaseScoreOnHit()
     {
-        totalHits = ball.getAmountOfHits();
+        totalHits++;
     }
 
     public int getScore()
-    {
+    {    
         return totalHits;
+    }
+
+    public void setScore(int value)
+    {
+        totalHits = value;
     }
 }

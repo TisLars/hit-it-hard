@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class ScoreMenuScript : MonoBehaviour
 {
-    private SessionScoreScript score;
+    private SessionScoreScript score = null;
 
     public Button returnButton;
     private Text scoreText;
@@ -11,12 +11,18 @@ public class ScoreMenuScript : MonoBehaviour
     void Start()
     {
         returnButton = returnButton.GetComponent<Button>();
-        scoreText = scoreText.GetComponent<Text>();
+
+        scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
+        score = GameObject.Find("SessionScore").GetComponent<SessionScoreScript>();
+        
+        SetScoreText();
     }
 
     void SetScoreText()
     {
-        scoreText.text = score.getScore().ToString();
+        scoreText.text = "Total wallhits: " + score.getScore();
+        scoreText.text += "\nThanks for playing!\n More Content Soon!";
+        score.setScore(0);
     }
 
     public void ReturnToMenu()
