@@ -7,7 +7,7 @@ public class MenuScript : MonoBehaviour {
     public Button playButton;
     public Button exitButton;
 
-	void Start () {
+    void Start () {
         playButton = playButton.GetComponent<Button>();
         exitButton = exitButton.GetComponent<Button>();
 	}

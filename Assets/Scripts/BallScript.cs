@@ -35,7 +35,6 @@ public class BallScript : MonoBehaviour {
     void KillIt()
     {
         Destroy(gameObject);
-        Debug.Log("You lose! > LevelFailed()");
         level.LevelFailed();
     }
 

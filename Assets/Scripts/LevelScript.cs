@@ -61,10 +61,8 @@ public class LevelScript : MonoBehaviour {
 
     public void LevelComplete()
     {
-        Debug.Log("You finished this level. Good job!");
-
         int i = Application.loadedLevel;
-        if(i == (Application.levelCount - 1))
+        if (i == (Application.levelCount - 1))
         {
             Application.LoadLevel(0);
         } else
@@ -76,7 +74,6 @@ public class LevelScript : MonoBehaviour {
 
     public void LevelFailed()
     {
-        Debug.Log("Nope!");
         Application.LoadLevel(Application.loadedLevel);
         Destroy(ball);
     }
