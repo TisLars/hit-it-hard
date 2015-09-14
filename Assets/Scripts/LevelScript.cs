@@ -6,21 +6,43 @@ public class LevelScript : MonoBehaviour {
 
     public int minimalHitRule;
     public int maximumHitRule;
+    public int showTextTimer = 3;
 
     private GameObject ball;
-    
-    public int showTextTimer = 3;
+    private BallScript ballScript;
+
+    private GameObject levelTextPanel;
+    private GameObject levelText;
+
+    private ShootLogicV3 shootScript;
 
     void Awake()
     {
-        setLevelIntroText();
+        levelText = GameObject.Find("LevelText");
+        levelTextPanel = GameObject.Find("LevelTextPanel");
+        
         ball = GameObject.Find("Ball");
+        ballScript = ball.GetComponent<BallScript>();
+        shootScript = ball.GetComponent<ShootLogicV3>();
     }
 
+    void Start()
+    {
+        setLevelIntroText();
+    }
+
+    void Update()
+    {
+        if (levelText != null && levelTextPanel != null && shootScript.isShot)
+        {
+            Destroy(levelText);
+            Destroy(levelTextPanel);
+        }
+
+    }
+    
     void setLevelIntroText()
     {
-        GameObject levelText = GameObject.Find("LevelText");
-        GameObject levelTextPanel = GameObject.Find("LevelTextPanel");
         string ruleText = "Level "+ Application.loadedLevel +"\n";
         string wallText = "walls";
 
@@ -42,6 +64,11 @@ public class LevelScript : MonoBehaviour {
                 wallText = "wall";
             }
             ruleText += "Do not hit more than " + maximumHitRule + " " + wallText + "\n";
+        }
+
+        if (maximumHitRule == -1 && minimalHitRule == 0)
+        {
+            ruleText += "Don't hit any walls!";
         }
 
         levelText.GetComponent<Text>().text = ruleText;
@@ -69,7 +96,6 @@ public class LevelScript : MonoBehaviour {
         {
             Application.LoadLevel(i + 1);
         }
-
     }
 
     public void LevelFailed()

@@ -11,7 +11,7 @@ public class ShootLogicV3 : MonoBehaviour {
 
     private bool isClicking;
     private bool drawing;
-    private bool isShot;
+    public bool isShot;
 
     private Vector2 prevVelocity;
     private Vector2 dragToMouse;
