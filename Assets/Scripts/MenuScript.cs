@@ -18,7 +18,7 @@ public class MenuScript : MonoBehaviour {
 
     public void GoToLevelMenu()
     {
-        Application.LoadLevel(1);
+        Application.LoadLevel(Application.levelCount - 1);
     }
 
     public void StartTimeAttack()

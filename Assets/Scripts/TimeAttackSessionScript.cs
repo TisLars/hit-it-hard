@@ -7,7 +7,6 @@ public class TimeAttackSessionScript : MonoBehaviour {
 
 	void Start () {
         DontDestroyOnLoad(this);
-        Debug.Log("starting timer");
 	}
 
     void Update()
