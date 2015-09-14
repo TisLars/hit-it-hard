@@ -75,21 +75,22 @@ public class ShootLogicV3 : MonoBehaviour {
     void Shoot()
     {
         Destroy(lineRenderer); // First remove the line.
-
+  
         Vector3 mousePos = Input.mousePosition;
         Vector3 ballPosition = Camera.main.WorldToScreenPoint(ballStartPosition);
         Vector3 dir = (ballPosition - mousePos).normalized;
         
         float velocity = Vector3.Distance(ballPosition, mousePos) * 5f;
-
+        
         // When its maximized for shooting, set the max velocity
-        if (dragToMouse.sqrMagnitude > maxDragSqr)
+        if (velocity > 500f)
         {
             velocity = 500f;
         }
 
-        GetComponent<Rigidbody2D>().AddForce(dir * (velocity * acceleration)); // Shoot it using the velocity * acceleration;
-
+        Vector3 shootit = dir * (velocity * acceleration);
+        GetComponent<Rigidbody2D>().AddForce(shootit); // Shoot it using the velocity * acceleration;
+        
         isShot = true;
     }
 
