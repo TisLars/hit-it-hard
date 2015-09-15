@@ -10,17 +10,17 @@ public class CameraShakeScript : MonoBehaviour
     public float originalIntensity = 0.04f;
     float shakeDecay;
     float shakeIntensity;
-    private bool shaking;
+    private bool isShaking;
     Transform cameraTransform;
 
-    void Start()
+    void OnLevelWasLoaded()
     {
         cameraTransform = Camera.main.transform;
     }
 
     void Update()
     {
-        if (!shaking)
+        if (!isShaking)
             return;
 
         if (shakeIntensity > 0f)
@@ -36,7 +36,7 @@ public class CameraShakeScript : MonoBehaviour
 
         else
         {
-            shaking = false;
+            isShaking = false;
             cameraTransform.localPosition = originPosition;
             cameraTransform.localRotation = originRotation;
         }
@@ -44,14 +44,13 @@ public class CameraShakeScript : MonoBehaviour
 
     public void Shake()
     {
-
-        if (!shaking)
+        if (!isShaking)
         {
             originPosition = cameraTransform.localPosition;
             originRotation = cameraTransform.localRotation;
         }
 
-        shaking = true;
+        isShaking = true;
         shakeIntensity = originalIntensity;
         shakeDecay = originalDecay;
     }

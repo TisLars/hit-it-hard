@@ -4,14 +4,8 @@ public class GameManagerScript : MonoBehaviour {
 
     public static GameManagerScript manager;
     private BallScript ball = null;
-    CameraShakeScript camShake;
 
     int totalHits = 0;
-
-    void Start()
-    {
-        camShake = GetComponent<CameraShakeScript>();
-    }
 
     void Awake()
     {

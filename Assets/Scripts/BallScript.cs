@@ -4,10 +4,11 @@ public class BallScript : MonoBehaviour {
 
     private LevelScript level;
     private GameManagerScript manager;
+    private CameraShakeScript camShake;
     private Camera cam;
     private Color current;
     private Color bgColor;
-
+    
     private int amountOfHits;
 
     private GameObject LosingScreen;
@@ -15,13 +16,15 @@ public class BallScript : MonoBehaviour {
     void Awake () {
         level = GameObject.Find("Level").GetComponent<LevelScript>();
         manager = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
+        camShake = GameObject.Find("GameManager").GetComponent<CameraShakeScript>();
         cam = Camera.main;
+
         amountOfHits = 0;
     }
 
-    void OnCollisionEnter2D(Collision2D collider)
+    void OnCollisionEnter2D(Collision2D coll)
     {
-        if (collider.gameObject.name.Contains("Wall"))
+        if (coll.gameObject.name.Contains("Wall"))
         {
             if(amountOfHits >= level.maximumHitRule && level.maximumHitRule != 0)
             {
@@ -29,6 +32,8 @@ public class BallScript : MonoBehaviour {
             }
             else
             {
+                if (coll.relativeVelocity.magnitude > 13)
+                    camShake.Shake();
                 HitWall();
             }
         }
