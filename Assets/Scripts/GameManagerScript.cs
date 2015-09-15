@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
 
-public class SessionScoreScript : MonoBehaviour {
+public class GameManagerScript : MonoBehaviour {
 
-    public static SessionScoreScript session;
-
+    public static GameManagerScript manager;
     private BallScript ball = null;
+    CameraShakeScript camShake;
 
     int totalHits = 0;
+
+    void Start()
+    {
+        camShake = GetComponent<CameraShakeScript>();
+    }
 
     void Awake()
     {
@@ -17,9 +20,9 @@ public class SessionScoreScript : MonoBehaviour {
             ball = GameObject.Find("Ball").GetComponent<BallScript>();
         } 
 
-        if (!session)
+        if (!manager)
         {
-            session = this;
+            manager = this;
             DontDestroyOnLoad(gameObject);
         }
         else

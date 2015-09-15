@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class ScoreMenuScript : MonoBehaviour
 {
-    private SessionScoreScript score = null;
+    private GameManagerScript manager = null;
     private TimeAttackSessionScript timeAttackSessionScript = null;
     private GameObject timeAttackSession;
 
@@ -17,9 +17,9 @@ public class ScoreMenuScript : MonoBehaviour
         scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
         timerText = GameObject.Find("TimerText").GetComponent<Text>();
 
-        if (GameObject.Find("SessionScore"))
+        if (GameObject.Find("GameManager"))
         {
-            score = GameObject.Find("SessionScore").GetComponent<SessionScoreScript>();
+            manager = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
             SetScoreText();
         }
         if (GameObject.Find("TimeAttackSession(Clone)"))
@@ -34,10 +34,10 @@ public class ScoreMenuScript : MonoBehaviour
 
     void SetScoreText()
     {
-        if(score)
+        if(manager)
         {
-            scoreText.text = "Total wallhits: " + score.getScore();
-            score.setScore(0);
+            scoreText.text = "Total wallhits: " + manager.getScore();
+            manager.setScore(0);
         }
     }
 

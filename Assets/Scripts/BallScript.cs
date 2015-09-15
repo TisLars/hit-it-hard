@@ -3,7 +3,7 @@
 public class BallScript : MonoBehaviour {
 
     private LevelScript level;
-    private SessionScoreScript sessionScore;
+    private GameManagerScript manager;
     private Camera cam;
     private Color current;
     private Color bgColor;
@@ -14,7 +14,7 @@ public class BallScript : MonoBehaviour {
 
     void Awake () {
         level = GameObject.Find("Level").GetComponent<LevelScript>();
-        sessionScore = GameObject.Find("SessionScore").GetComponent<SessionScoreScript>();
+        manager = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
         cam = Camera.main;
         amountOfHits = 0;
     }
@@ -55,9 +55,9 @@ public class BallScript : MonoBehaviour {
     void HitWall()
     {
         ChangeBackgroundColor();
-        if (GameObject.Find("SessionScore"))
+        if (GameObject.Find("GameManager"))
         {
-            sessionScore.IncreaseScoreOnHit();
+            manager.IncreaseScoreOnHit();
         }
         amountOfHits++;
     }
