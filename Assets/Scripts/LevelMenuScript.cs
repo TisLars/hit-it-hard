@@ -13,7 +13,16 @@ public class LevelMenuScript : MonoBehaviour {
 
     public void StartLevel(int level)
     {
-        Application.LoadLevel(level);
+        string levelName;
+        if (level < 10)
+        {
+            levelName = "Level0" + level;
+        } else
+        {
+            levelName = "Level" + level;
+        }
+        
+        Application.LoadLevel(levelName);
     }
 
     public void ReturnToMainMenu()

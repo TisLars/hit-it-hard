@@ -18,12 +18,11 @@ public class ShootLogicV3 : MonoBehaviour {
 
     private Vector3 ballStartPosition;
 
-    private LineRenderer lineRenderer;
+    public LineRenderer lineRenderer;
 
     private Ray rayToMouse;
     private Ray leftStartPointToBall;
-
-    //
+    
     void Awake()
     {
         ballStartPosition = transform.position; // Set the ball position
@@ -36,7 +35,7 @@ public class ShootLogicV3 : MonoBehaviour {
         lineRenderer.SetPosition(0, lineRenderer.transform.position);
         lineRenderer.SetPosition(1, ballStartPosition);
         lineRenderer.SetWidth(lineWidth, lineWidth);
-
+        
         rayToMouse = new Ray(ballStartPosition, Vector3.zero);
         leftStartPointToBall = new Ray(lineRenderer.transform.position, Vector3.zero);
         maxDragSqr = maxDrag * maxDrag;
@@ -74,7 +73,8 @@ public class ShootLogicV3 : MonoBehaviour {
     //
     void Shoot()
     {
-        Destroy(lineRenderer); // First remove the line.
+        //Destroy(lineRenderer); // First remove the line.
+        lineRenderer.SetPosition(1, new Vector3(transform.position.x,transform.position.y, -100));
   
         Vector3 mousePos = Input.mousePosition;
         Vector3 ballPosition = Camera.main.WorldToScreenPoint(ballStartPosition);
@@ -87,14 +87,13 @@ public class ShootLogicV3 : MonoBehaviour {
         {
             velocity = 500f;
         }
-
+        
         Vector3 shootit = dir * (velocity * acceleration);
         GetComponent<Rigidbody2D>().AddForce(shootit); // Shoot it using the velocity * acceleration;
-        
+
         isShot = true;
     }
-
-    //
+    
     void Dragging()
     {
         Vector3 mouseWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
