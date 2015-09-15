@@ -3,17 +3,11 @@
 public class GameManagerScript : MonoBehaviour {
 
     public static GameManagerScript manager;
-    private BallScript ball = null;
 
     int totalHits = 0;
 
     void Awake()
     {
-        if(GameObject.Find("Ball"))
-        {
-            ball = GameObject.Find("Ball").GetComponent<BallScript>();
-        } 
-
         if (!manager)
         {
             manager = this;

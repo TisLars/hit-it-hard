@@ -33,7 +33,9 @@ public class BallScript : MonoBehaviour {
             else
             {
                 if (coll.relativeVelocity.magnitude > 13)
+                {
                     camShake.Shake();
+                }
                 HitWall();
             }
         }
@@ -59,7 +61,7 @@ public class BallScript : MonoBehaviour {
 
     void HitWall()
     {
-        ChangeBackgroundColor();
+        //ChangeBackgroundColor();
         if (GameObject.Find("GameManager"))
         {
             manager.IncreaseScoreOnHit();
