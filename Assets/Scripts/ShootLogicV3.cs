@@ -74,8 +74,9 @@ public class ShootLogicV3 : MonoBehaviour {
     void Shoot()
     {
         //Destroy(lineRenderer); // First remove the line.
-        lineRenderer.SetPosition(1, new Vector3(transform.position.x,transform.position.y, -100));
-  
+        lineRenderer.SetPosition(0, new Vector3(transform.position.x,transform.position.y, -100));
+        lineRenderer.SetPosition(1, new Vector3(transform.position.x, transform.position.y, -100));
+
         Vector3 mousePos = Input.mousePosition;
         Vector3 ballPosition = Camera.main.WorldToScreenPoint(ballStartPosition);
         Vector3 dir = (ballPosition - mousePos).normalized;
