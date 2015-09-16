@@ -27,7 +27,7 @@ public class Goal : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire3"))
         {
             Application.LoadLevel(Application.loadedLevel + 1);
         }

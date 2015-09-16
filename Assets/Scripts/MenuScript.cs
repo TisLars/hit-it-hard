@@ -40,4 +40,12 @@ public class MenuScript : MonoBehaviour {
     {
         Application.Quit();
     }
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Fire3"))
+        {
+            PlayerPrefs.DeleteAll();
+        }
+    }
 }

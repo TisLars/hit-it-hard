@@ -33,12 +33,4 @@ public class LevelMenuScript : MonoBehaviour {
     {
         Application.LoadLevel(0);
     }
-
-    void Update()
-    {
-        if (Input.GetButtonDown("Fire2"))
-        {
-            PlayerPrefs.DeleteAll();
-        }
-    }
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class KattenPoot : MonoBehaviour {
+public class CatPaw : MonoBehaviour {
 
     private LevelScript level;
 
