@@ -14,7 +14,7 @@ public class LevelMenuScript : MonoBehaviour {
 
     public void StartLevel(int level)
     {
-        Application.LoadLevel("Level"+level);
+        Application.LoadLevel("Level" + level);
     }
 
     void UnlockLevels()

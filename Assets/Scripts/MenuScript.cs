@@ -21,13 +21,26 @@ public class MenuScript : MonoBehaviour {
 
     public void GoToLevelMenu()
     {
-        Application.LoadLevel(Application.levelCount - 1);
+        if (!PlayerPrefs.HasKey("Tutorial"))
+            Application.LoadLevel("Tutorial01");
+        else
+            Application.LoadLevel("LevelMenu");
     }
 
     public void StartTimeAttack()
     {
-        Instantiate(TimeAttackSession);
-        Application.LoadLevel(1);
+        if (!PlayerPrefs.HasKey("Tutorial"))
+            Application.LoadLevel("Tutorial01");
+        else
+        {
+            Instantiate(TimeAttackSession);
+            Application.LoadLevel(1);
+        }
+    }
+
+    public void StartTutorial()
+    {
+        Application.LoadLevel("Tutorial01");
     }
 
     public void Mute()
@@ -44,8 +57,6 @@ public class MenuScript : MonoBehaviour {
     void Update()
     {
         if (Input.GetButtonDown("Fire3"))
-        {
             PlayerPrefs.DeleteAll();
-        }
     }
 }
