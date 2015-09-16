@@ -24,6 +24,11 @@ public class LevelScript : MonoBehaviour {
         ball = GameObject.Find("Ball");
         ballScript = ball.GetComponent<BallScript>();
         shootScript = ball.GetComponent<ShootLogicV3>();
+
+        if (PlayerPrefs.HasKey("Level"))
+        {
+            Debug.Log(PlayerPrefs.GetInt("Level"));
+        }
     }
 
     void Start()
