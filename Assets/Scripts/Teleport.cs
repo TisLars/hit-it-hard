@@ -14,9 +14,8 @@ public class Teleport : MonoBehaviour {
 
     void OnTriggerEnter2D()
     {
-        ball.transform.position = exit.transform.position;
+        float zposBall = ball.transform.position.z;
+        ball.transform.position = new Vector3(exit.transform.position.x, exit.transform.position.y, zposBall);
     }
-
-
-	
+    
 }
