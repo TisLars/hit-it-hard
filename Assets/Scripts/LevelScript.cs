@@ -22,18 +22,21 @@ public class LevelScript : MonoBehaviour {
         levelTextPanel = GameObject.Find("LevelTextPanel");
         
         ball = GameObject.Find("Ball");
-        ballScript = ball.GetComponent<BallScript>();
-        shootScript = ball.GetComponent<ShootLogicV3>();
-
-        if (PlayerPrefs.HasKey("Level"))
+        if (ball)
         {
-            Debug.Log(PlayerPrefs.GetInt("Level"));
+            ballScript = ball.GetComponent<BallScript>();
+            shootScript = ball.GetComponent<ShootLogicV3>();
         }
+
+        if (PlayerPrefs.HasKey("Level" + Application.loadedLevel))
+            Debug.Log(PlayerPrefs.GetInt("Level" + Application.loadedLevel));
     }
 
     void Start()
     {
         setLevelIntroText();
+        if (!PlayerPrefs.HasKey("Level" + Application.loadedLevel))
+            PlayerPrefs.SetInt("Level" + Application.loadedLevel, 1);
     }
 
     void Update()

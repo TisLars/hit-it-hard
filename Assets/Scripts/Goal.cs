@@ -16,7 +16,6 @@ public class Goal : MonoBehaviour {
     {
         if (ball.getAmountOfHits() >= level.getMinHitRule())
         {
-            PlayerPrefs.SetInt("Level", Application.loadedLevel);
             level.LevelComplete();
         }
         else

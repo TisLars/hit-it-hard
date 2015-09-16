@@ -9,24 +9,36 @@ public class LevelMenuScript : MonoBehaviour {
     void Start()
     {
         returnButton = returnButton.GetComponent<Button>();
+        UnlockLevels();
     }
 
     public void StartLevel(int level)
     {
-        string levelName;
-        if (level < 10)
+        Application.LoadLevel("Level"+level);
+    }
+
+    void UnlockLevels()
+    {
+        for (int i = 2; i < Application.levelCount - 9; i++)
         {
-            levelName = "Level0" + level;
-        } else
-        {
-            levelName = "Level" + level;
+            if (PlayerPrefs.GetInt("Level" + i) == 1)
+            {
+                Debug.Log("LockedLevel" + i);
+                GameObject.Find("LockedLevel" + i).SetActive(false);
+            }
         }
-        
-        Application.LoadLevel(levelName);
     }
 
     public void ReturnToMainMenu()
     {
         Application.LoadLevel(0);
+    }
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Fire2"))
+        {
+            PlayerPrefs.DeleteAll();
+        }
     }
 }
