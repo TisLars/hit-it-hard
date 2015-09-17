@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PauseMenuScript : MonoBehaviour {
 
     public GameObject pauseMenuCanvas;
+    public GameObject ui;
+    public Button menuButton;
     public string mainMenu;
     public bool isPaused;
 
@@ -19,9 +22,11 @@ public class PauseMenuScript : MonoBehaviour {
             pauseMenuCanvas.SetActive(false);
             Time.timeScale = 1f;
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-            isPaused = !isPaused;
+    public void PauseGame()
+    {
+        isPaused = !isPaused;
     }
     
     public void Resume()
@@ -31,6 +36,8 @@ public class PauseMenuScript : MonoBehaviour {
 
     public void MainMenu()
     {
+        if (GameObject.Find("TimeAttackSession(Clone)"))
+            GameObject.Destroy(GameObject.Find("TimeAttackSession(Clone)"));
         Application.LoadLevel(mainMenu);
     }
 }
