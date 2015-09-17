@@ -7,15 +7,23 @@ public class MenuScript : MonoBehaviour {
     public Button playButton;
     public Button timeAttackButton;
     public Button volumeButton;
+    public Button tutorialButton;
+    public Button settingsButton;
     public Button exitButton;
 
+    bool showSettings = false;
     bool isMute;
+
+    public GameObject main;
+    public GameObject settings;
     public GameObject TimeAttackSession;
 
     void Start () {
         playButton = playButton.GetComponent<Button>();
         timeAttackButton = timeAttackButton.GetComponent<Button>();
         volumeButton = volumeButton.GetComponent<Button>();
+        tutorialButton = tutorialButton.GetComponent<Button>();
+        settingsButton = settingsButton.GetComponent<Button>();
         exitButton = exitButton.GetComponent<Button>();
 	}
 
@@ -38,6 +46,11 @@ public class MenuScript : MonoBehaviour {
         }
     }
 
+    public void ToggleSettingsMenu()
+    {
+        showSettings = !showSettings;
+    }
+
     public void StartTutorial()
     {
         Application.LoadLevel("Tutorial01");
@@ -56,6 +69,15 @@ public class MenuScript : MonoBehaviour {
 
     void Update()
     {
+        if (showSettings)
+        {
+            main.SetActive(false);
+            settings.SetActive(true);
+        } else
+        {
+            settings.SetActive(false);
+            main.SetActive(true);
+        }
         if (Input.GetButtonDown("Fire3"))
             PlayerPrefs.DeleteAll();
     }

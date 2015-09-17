@@ -24,7 +24,7 @@ public class PauseMenuScript : MonoBehaviour {
         }
     }
 
-    public void PauseGame()
+    public void TogglePauseMenu()
     {
         isPaused = !isPaused;
     }
@@ -32,6 +32,11 @@ public class PauseMenuScript : MonoBehaviour {
     public void Resume()
     {
         isPaused = false;
+    }
+
+    public void ReplayLevel()
+    {
+        Application.LoadLevel(Application.loadedLevel);
     }
 
     public void MainMenu()

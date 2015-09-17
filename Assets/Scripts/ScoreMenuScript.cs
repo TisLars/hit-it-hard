@@ -44,11 +44,11 @@ public class ScoreMenuScript : MonoBehaviour
     void SetTimerText()
     {
         if (timeAttackSessionScript.getTime() < 60)
-            timerText.text = "Completed in " + System.String.Format("{0:0.000}", timeAttackSessionScript.getTime()) + " seconds";
+            timerText.text = "Time: " + System.String.Format("{0:0.000}", timeAttackSessionScript.getTime()) + " seconds";
         else if (timeAttackSessionScript.getTime() < 120)
-            timerText.text = "Completed in " + System.String.Format("{0:0.000}", timeAttackSessionScript.getTime()) + " minute";
+            timerText.text = "Time: " + System.String.Format("{0:0.000}", timeAttackSessionScript.getTime()) + " minute";
         else if (timeAttackSessionScript.getTime() >= 120)
-            timerText.text = "Completed in " + System.String.Format("{0:0.000}", timeAttackSessionScript.getTime()) + " minutes";
+            timerText.text = "Time: " + System.String.Format("{0:0.000}", timeAttackSessionScript.getTime()) + " minutes";
     }
 
     public void ReturnToMenu()
