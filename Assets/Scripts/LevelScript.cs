@@ -43,7 +43,6 @@ public class LevelScript : MonoBehaviour {
             Destroy(levelText);
             Destroy(levelTextPanel);
         }
-
     }
     
     void setLevelIntroText()
@@ -82,22 +81,14 @@ public class LevelScript : MonoBehaviour {
         Destroy(levelTextPanel, showTextTimer);
     }
 
-    public int getMaxHitRule()
-    {
-        return maximumHitRule;
-    }
-    public int getMinHitRule()
-    {
-        return minimalHitRule;
-    }
-
     public void LevelComplete()
     {
         int i = Application.loadedLevel;
         if (i == (Application.levelCount - 1))
         {
             Application.LoadLevel(0);
-        } else
+        }
+        else
         {
             Application.LoadLevel(i + 1);
         }
@@ -107,6 +98,15 @@ public class LevelScript : MonoBehaviour {
     {
         Application.LoadLevel(Application.loadedLevel);
         Destroy(ball);
+    }
+
+    public int getMaxHitRule()
+    {
+        return maximumHitRule;
+    }
+    public int getMinHitRule()
+    {
+        return minimalHitRule;
     }
 
 }

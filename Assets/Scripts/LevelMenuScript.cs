@@ -20,13 +20,8 @@ public class LevelMenuScript : MonoBehaviour {
     void UnlockLevels()
     {
         for (int i = 2; i < Application.levelCount - 9; i++)
-        {
             if (PlayerPrefs.GetInt("Level" + i) == 1)
-            {
-                Debug.Log("LockedLevel" + i);
                 GameObject.Find("LockedLevel" + i).SetActive(false);
-            }
-        }
     }
 
     public void ReturnToMainMenu()
