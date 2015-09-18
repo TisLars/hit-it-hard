@@ -1,28 +1,31 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class LevelMenuScript : MonoBehaviour {
 
-    public Button levelOneButton;
+    public GameObject levelButton;
     public Button returnButton;
 
     void Start()
     {
-        levelOneButton = levelOneButton.GetComponent<Button>();
         returnButton = returnButton.GetComponent<Button>();
-
+        UnlockLevels();
     }
 
-    public void StartLevel()
+    public void StartLevel(int level)
     {
-        Application.LoadLevel(2);
-        Debug.Log("Start level 1");
+        Application.LoadLevel("Level" + level);
+    }
+
+    void UnlockLevels()
+    {
+        for (int i = 2; i < Application.levelCount - 8; i++)
+            if (PlayerPrefs.GetInt("Level" + i) == 1)
+                GameObject.Find("LockedLevel" + i).SetActive(false);
     }
 
     public void ReturnToMainMenu()
     {
         Application.LoadLevel(0);
-        Debug.Log("Return to Main Menu");
     }
 }
