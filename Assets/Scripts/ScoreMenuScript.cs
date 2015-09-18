@@ -29,7 +29,6 @@ public class ScoreMenuScript : MonoBehaviour
             SetTimerText();
             Destroy(timeAttackSession);
         }
-
     }
 
     void SetScoreText()

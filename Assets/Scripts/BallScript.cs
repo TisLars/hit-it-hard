@@ -1,19 +1,25 @@
 ﻿using UnityEngine;
+using System;
 
 public class BallScript : MonoBehaviour {
 
     private LevelScript level;
     private GameManagerScript manager;
     private CameraShakeScript camShake;
+    private ParticleSystem particle;
     private Camera cam;
     private Color current;
     private Color bgColor;
+
+    private System.Random rnd;
+    public AudioClip[] audioClip;
     
     private int amountOfHits;
 
     private GameObject LosingScreen;
 
-    void Awake () {
+    void Awake() {
+        rnd = new System.Random();
         level = GameObject.Find("Level").GetComponent<LevelScript>();
         manager = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
         camShake = GameObject.Find("GameManager").GetComponent<CameraShakeScript>();
@@ -24,6 +30,7 @@ public class BallScript : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll)
     {
+        PlaySound(rnd.Next(0,2));
         if (coll.gameObject.name.Contains("Wall"))
         {
             if(amountOfHits >= level.maximumHitRule && level.maximumHitRule != 0)
@@ -41,6 +48,12 @@ public class BallScript : MonoBehaviour {
         }
     }
 
+    void PlaySound(int clip)
+    {
+        GetComponent<AudioSource>().clip = audioClip[clip];
+        GetComponent<AudioSource>().Play();
+    }
+
     void KillIt()
     {
         Destroy(gameObject);
@@ -49,8 +62,8 @@ public class BallScript : MonoBehaviour {
 
     private void ChangeBackgroundColor()
     {
-        current = new Color(Random.value, Random.value, Random.value);
-        bgColor = new Color(Random.value, Random.value, Random.value);
+        current = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
+        bgColor = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
         cam.backgroundColor = Color.Lerp(current, bgColor, 5.0f);
     }
 
