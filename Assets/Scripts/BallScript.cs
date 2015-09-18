@@ -60,13 +60,6 @@ public class BallScript : MonoBehaviour {
         level.LevelFailed();
     }
 
-    private void ChangeBackgroundColor()
-    {
-        current = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
-        bgColor = new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value);
-        cam.backgroundColor = Color.Lerp(current, bgColor, 5.0f);
-    }
-
     public int getAmountOfHits()
     {
         return amountOfHits;
@@ -74,7 +67,6 @@ public class BallScript : MonoBehaviour {
 
     void HitWall()
     {
-        //ChangeBackgroundColor();
         if (GameObject.Find("GameManager"))
         {
             manager.IncreaseScoreOnHit();
