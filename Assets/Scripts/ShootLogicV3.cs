@@ -103,7 +103,7 @@ public class ShootLogicV3 : MonoBehaviour {
         // Invert Line
         mouseWorldPoint.x = ballStartPosition.x - dragToMouse.x;
         mouseWorldPoint.y = ballStartPosition.y - dragToMouse.y;
-
+        
         // Dont extend the line to space, Hold it at max drag.
         if (dragToMouse.sqrMagnitude > maxDragSqr)
         {
