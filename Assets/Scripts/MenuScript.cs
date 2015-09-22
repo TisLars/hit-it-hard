@@ -25,6 +25,15 @@ public class MenuScript : MonoBehaviour {
         tutorialButton = tutorialButton.GetComponent<Button>();
         settingsButton = settingsButton.GetComponent<Button>();
         exitButton = exitButton.GetComponent<Button>();
+
+        if (!PlayerPrefs.HasKey("volume"))
+        {
+            PlayerPrefs.SetInt("volume", 1);
+        } else
+        {
+            if (PlayerPrefs.GetInt("volume") == 0)
+                Mute();
+        }
 	}
 
     public void GoToLevelMenu()
@@ -59,7 +68,15 @@ public class MenuScript : MonoBehaviour {
     public void Mute()
     {
         isMute = !isMute;
-        AudioListener.volume = isMute ? 0 : 1;
+        if (isMute)
+        {
+            AudioListener.volume = 1;
+            PlayerPrefs.SetInt("volume", 1);
+        } else
+        {
+            AudioListener.volume = 0;
+            PlayerPrefs.SetInt("volume", 0);
+        }
     }
 
     public void ExitGame()

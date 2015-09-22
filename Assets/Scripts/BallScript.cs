@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections;
 
 public class BallScript : MonoBehaviour {
 
@@ -15,17 +16,42 @@ public class BallScript : MonoBehaviour {
     public AudioClip[] audioClip;
     
     private int amountOfHits;
+    private bool isBoosted;
 
     private GameObject LosingScreen;
+    private ShootLogicV3 shootLogic;
 
     void Awake() {
         rnd = new System.Random();
+        GetComponent<TrailRenderer>().enabled = false;
+        isBoosted = false;
         level = GameObject.Find("Level").GetComponent<LevelScript>();
-        manager = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
-        camShake = GameObject.Find("GameManager").GetComponent<CameraShakeScript>();
-        cam = Camera.main;
+        shootLogic = GetComponent<ShootLogicV3>();
+        if (GameObject.Find("GameManager"))
+        {
+            manager = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
+            camShake = GameObject.Find("GameManager").GetComponent<CameraShakeScript>();
+            cam = Camera.main;
+        }
 
         amountOfHits = 0;
+    }
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Fire1") && shootLogic.isShot == true && isBoosted == false)
+        {
+            isBoosted = true;
+            StartCoroutine(ActivateBoost());
+        }
+    }
+
+    IEnumerator ActivateBoost()
+    {
+        GetComponent<TrailRenderer>().enabled = true;
+        GetComponent<Rigidbody2D>().velocity *= 2;
+        yield return new WaitForSeconds(1);
+        GetComponent<TrailRenderer>().enabled = false;
     }
 
     void OnCollisionEnter2D(Collision2D coll)
