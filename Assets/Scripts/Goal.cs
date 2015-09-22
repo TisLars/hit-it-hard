@@ -22,12 +22,6 @@ public class Goal : MonoBehaviour {
         {
             level.LevelFailed();
         }
-        
-    }
 
-    void Update()
-    {
-        if (Input.GetButtonDown("Fire3"))
-            Application.LoadLevel(Application.loadedLevel + 1);
     }
 }
