@@ -13,8 +13,12 @@ public class ChangeDirection : MonoBehaviour {
     private bool isLerping =  false;
     private bool hamsterInWheel = false;
     private float animatorStartSpeed;
-    private float lerpDuration = 1f;
+    private float lerpDuration = 0.5f;
     private float lerpStartTime;
+
+    private int turnDirection;
+    private const int LEFT = 0;
+    private const int RIGHT = 1;
    
 
     // Publics
@@ -23,33 +27,50 @@ public class ChangeDirection : MonoBehaviour {
     void Awake()
     {
         ball = GameObject.Find("Ball");
-
         animator = GetComponent<Animator>();
         animatorStartSpeed = animator.speed;
-        animator.speed = 0;
+        animator.speed = 0; // Stop animation.
     }
-    
 	
     void OnTriggerEnter2D()
     {
         StartLerping();
-        StartAnimator();
+        StartAnimator(); // Start animation.
         hamsterInWheel = true;
+    }
+
+    void RotateHamster()
+    {
+        if(turnDirection == RIGHT)
+        {
+            ball.transform.Rotate(0, 0, (0 - (Time.deltaTime * 500)));
+        }
+        else
+        {
+            ball.transform.Rotate(0, 0, Time.deltaTime * 500);
+        }
+       
     }
 
     void StartAnimator()
     {
         // If hit from the right, animate the wheel left
         if(transform.InverseTransformPoint(ball.transform.position).x > 0) {
-            
             animator.runtimeAnimatorController = Resources.Load("Animations/Wheel/WheelTurnLeft") as RuntimeAnimatorController;
+            turnDirection = LEFT;
         }
         else
         {
             animator.runtimeAnimatorController = Resources.Load("Animations/Wheel/WheelTurnRight") as RuntimeAnimatorController;
+            turnDirection = RIGHT;
         }
 
         animator.speed = animatorStartSpeed * animatorSpeed;
+    }
+
+    void HitBall()
+    {
+        ball.GetComponent<Rigidbody2D>().AddForce(new Vector2(20f, 5f), ForceMode2D.Impulse);
     }
 
     void StartLerping()
@@ -66,7 +87,6 @@ public class ChangeDirection : MonoBehaviour {
 
     void Update()
     {
-
         if(isLerping)
         {
             float timeSinceLerpStart = Time.time - lerpStartTime;
@@ -80,9 +100,29 @@ public class ChangeDirection : MonoBehaviour {
             }
         }
 
+
+        //
+        if(hamsterInWheel)
+        {
+            RotateHamster();
+            foreach (Touch t in Input.touches)
+            {
+                if(t.phase == TouchPhase.Ended)
+                {
+                    HitBall();
+                }
+            }
+
+            if(Input.GetMouseButtonUp(0))
+            {
+                HitBall();
+            }
+
+        }
+        //
         
-
-
     }
+
+   
     
 }
