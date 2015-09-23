@@ -68,15 +68,16 @@ public class ChangeDirection : MonoBehaviour {
         animator.speed = animatorStartSpeed * animatorSpeed;
     }
 
-    void HitBall()
+    void SlamHamster()
     {
         ball.GetComponent<Rigidbody2D>().AddForce(new Vector2(20f, 5f), ForceMode2D.Impulse);
+        hamsterInWheel = false; //  We are not in the wheel no more.
     }
 
     void StartLerping()
     {
         ball.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 10);
-
+        
         lerpStartTime = Time.time;
 
         startPos = ball.transform.position;
@@ -104,18 +105,19 @@ public class ChangeDirection : MonoBehaviour {
         //
         if(hamsterInWheel)
         {
-            RotateHamster();
+            RotateHamster(); // Rotate the hamster with the direction the wheel is spinning.
+
             foreach (Touch t in Input.touches)
             {
                 if(t.phase == TouchPhase.Ended)
                 {
-                    HitBall();
+                    SlamHamster();
                 }
             }
 
             if(Input.GetMouseButtonUp(0))
             {
-                HitBall();
+                //SlamHamster();
             }
 
         }
