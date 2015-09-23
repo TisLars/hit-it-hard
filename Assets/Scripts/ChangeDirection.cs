@@ -13,25 +13,35 @@ public class ChangeDirection : MonoBehaviour {
     private bool isLerping =  false;
     private bool hamsterInWheel = false;
     private float animatorStartSpeed;
-    private float lerpDuration = 0.5f;
+    private float lerpDuration = 0.25f;
     private float lerpStartTime;
 
     private int turnDirection;
     private const int LEFT = 0;
     private const int RIGHT = 1;
-   
+
+
+    private GameObject circleEffectOnTouch;
+    private LineRenderer line;
+    private bool slammed = false;
+    private float slamOffsetStart = -1;
 
     // Publics
     public float animatorSpeed = 5;
     
     void Awake()
-    {
+    { 
         ball = GameObject.Find("Ball");
         animator = GetComponent<Animator>();
         animatorStartSpeed = animator.speed;
         animator.speed = 0; // Stop animation.
+
+
+        circleEffectOnTouch = GameObject.Find("Touch");
+        line = circleEffectOnTouch.GetComponent<LineRenderer>();
+        line.material.mainTextureOffset = new Vector2(slamOffsetStart, 0);
     }
-	
+
     void OnTriggerEnter2D()
     {
         StartLerping();
@@ -70,8 +80,20 @@ public class ChangeDirection : MonoBehaviour {
 
     void SlamHamster()
     {
-        ball.GetComponent<Rigidbody2D>().AddForce(new Vector2(20f, 5f), ForceMode2D.Impulse);
+        Vector3 inputPosition = Input.mousePosition;
+        Vector3 wheelPosition = Camera.main.WorldToScreenPoint(transform.position);
+        Vector3 dir = (inputPosition - wheelPosition).normalized;
+        
+        float velocity = Vector3.Distance(wheelPosition, inputPosition) * 5f;
+        ball.GetComponent<Rigidbody2D>().AddForce(dir * (velocity * 2.2f)); // Shoot it;
+
+        line.transform.position = Camera.main.ScreenToWorldPoint(inputPosition); // Get the cirle to the touchposition.
+        line.transform.position = new Vector3(line.transform.position.x, line.transform.position.y, 0); // Set the Z to 0. Else we dont see it in the scene
+
+        slammed = true;
+        // Stop the rotation;
         hamsterInWheel = false; //  We are not in the wheel no more.
+        animator.speed = 0;
     }
 
     void StartLerping()
@@ -117,12 +139,27 @@ public class ChangeDirection : MonoBehaviour {
 
             if(Input.GetMouseButtonUp(0))
             {
-                //SlamHamster();
+                SlamHamster();
             }
 
         }
         //
         
+        // Apply the circle after touch effect with a linerenderer
+        if(slammed)
+        {
+            if(slamOffsetStart < 1)
+            {
+                slamOffsetStart += 0.1f;
+                line.material.mainTextureOffset = line.material.mainTextureOffset + new Vector2(0.1f, 0);
+            }
+            if(slamOffsetStart == 1)
+            {
+                slammed = false;
+            }
+            //
+        }
+
     }
 
    
