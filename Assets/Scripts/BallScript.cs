@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections;
 
 public class BallScript : MonoBehaviour {
@@ -16,6 +15,7 @@ public class BallScript : MonoBehaviour {
     public AudioClip[] audioClip;
     
     private int amountOfHits;
+    private int amountOfBoost;
     private bool isBoosted;
 
     private GameObject LosingScreen;
@@ -39,7 +39,7 @@ public class BallScript : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && shootLogic.isShot == true && isBoosted == false)
+        if (Input.GetButtonDown("Fire1") && shootLogic.isShot == true && isBoosted == false && amountOfBoost > 0)
         {
             isBoosted = true;
             StartCoroutine(ActivateBoost());
@@ -49,9 +49,12 @@ public class BallScript : MonoBehaviour {
     IEnumerator ActivateBoost()
     {
         GetComponent<TrailRenderer>().enabled = true;
+        PlaySound(2);
         GetComponent<Rigidbody2D>().velocity *= 2;
+        amountOfBoost--;
         yield return new WaitForSeconds(1);
         GetComponent<TrailRenderer>().enabled = false;
+        isBoosted = false;
     }
 
     void OnCollisionEnter2D(Collision2D coll)
@@ -98,5 +101,14 @@ public class BallScript : MonoBehaviour {
             manager.IncreaseScoreOnHit();
         }
         amountOfHits++;
+    }
+
+    public int getAmountOfBoost()
+    {
+        return amountOfBoost;
+    }
+    public void setAmountOfBoost(int value)
+    {
+        amountOfBoost = value;
     }
 }
