@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class ChangeDirection : MonoBehaviour {
+public class Wheel : MonoBehaviour {
 
     // Privates
     private Animator animator;
@@ -28,7 +28,10 @@ public class ChangeDirection : MonoBehaviour {
 
     // Publics
     public float animatorSpeed = 5;
-    
+    public float shootAcceleration = 3f;
+
+    public float WheelTouchEffectRotateSpeed = 0.1f;
+
     void Awake()
     { 
         ball = GameObject.Find("Ball");
@@ -36,10 +39,12 @@ public class ChangeDirection : MonoBehaviour {
         animatorStartSpeed = animator.speed;
         animator.speed = 0; // Stop animation.
 
-
-        circleEffectOnTouch = GameObject.Find("Touch");
-        line = circleEffectOnTouch.GetComponent<LineRenderer>();
-        line.material.mainTextureOffset = new Vector2(slamOffsetStart, 0);
+        if(GameObject.Find("WheelTouchEffect"))
+        {
+            circleEffectOnTouch = GameObject.Find("WheelTouchEffect");
+            line = circleEffectOnTouch.GetComponent<LineRenderer>();
+            line.material.mainTextureOffset = new Vector2(slamOffsetStart, 0);
+        }
     }
 
     void OnTriggerEnter2D()
@@ -83,14 +88,11 @@ public class ChangeDirection : MonoBehaviour {
         Vector3 inputPosition = Input.mousePosition;
         Vector3 wheelPosition = Camera.main.WorldToScreenPoint(transform.position);
         Vector3 dir = (inputPosition - wheelPosition).normalized;
+
+        ball.GetComponent<Rigidbody2D>().AddForce(dir * (500f * shootAcceleration)); // Shoot it;
         
-        float velocity = Vector3.Distance(wheelPosition, inputPosition) * 5f;
-        ball.GetComponent<Rigidbody2D>().AddForce(dir * (velocity * 2.2f)); // Shoot it;
-
-        line.transform.position = Camera.main.ScreenToWorldPoint(inputPosition); // Get the cirle to the touchposition.
-        line.transform.position = new Vector3(line.transform.position.x, line.transform.position.y, 0); // Set the Z to 0. Else we dont see it in the scene
-
         slammed = true;
+
         // Stop the rotation;
         hamsterInWheel = false; //  We are not in the wheel no more.
         animator.speed = 0;
@@ -133,31 +135,42 @@ public class ChangeDirection : MonoBehaviour {
             {
                 if(t.phase == TouchPhase.Ended)
                 {
+                    if (line)
+                    {
+                        Vector3 touchPos = t.position;
+                        line.transform.position = Camera.main.ScreenToWorldPoint(touchPos); // Get the cirle to the touchposition.
+                        line.transform.position = new Vector3(line.transform.position.x, line.transform.position.y, 0); // Set the Z to 0. Else we dont see it in the scene
+                    }
                     SlamHamster();
                 }
             }
 
-            if(Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0))
             {
+                if (line)
+                {
+                    line.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition); // Get the cirle to the touchposition.
+                    line.transform.position = new Vector3(line.transform.position.x, line.transform.position.y, 0); // Set the Z to 0. Else we dont see it in the scene
+                }
                 SlamHamster();
             }
 
         }
-        //
-        
+
         // Apply the circle after touch effect with a linerenderer
         if(slammed)
         {
-            if(slamOffsetStart < 1)
+            float slamOffset = slamOffsetStart;
+            if (slamOffset < 1f)
             {
-                slamOffsetStart += 0.1f;
-                line.material.mainTextureOffset = line.material.mainTextureOffset + new Vector2(0.1f, 0);
+                slamOffset += WheelTouchEffectRotateSpeed;
+                line.material.mainTextureOffset = line.material.mainTextureOffset + new Vector2(WheelTouchEffectRotateSpeed, 0);
             }
-            if(slamOffsetStart == 1)
+            if(line.material.mainTextureOffset.x >= 1.1f)
             {
-                slammed = false;
+                slammed = false; // Reset the slammed boolean, otherwize it will keep on going.
+                line.material.mainTextureOffset = new Vector2(slamOffsetStart, 0);
             }
-            //
         }
 
     }
