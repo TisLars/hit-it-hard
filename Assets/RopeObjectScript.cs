@@ -4,12 +4,17 @@ using System.Collections;
 public class RopeObjectScript : MonoBehaviour {
 
     GameObject ball;
-    private bool hasPlayer = false;
     ShootLogicV3 shoot;
+    private bool hasPlayer = false;
+
+    private float phase, time;
+    private float period = 1f;
+    private float angle = 35f;
 
 	void Update () {
-        //TODO rotate rope between z:-35 z:35
-        transform.Rotate(0, 0, 2 * Time.deltaTime);
+        time = time + Time.deltaTime;
+        phase = Mathf.Sin(time / period);
+        transform.rotation = Quaternion.Euler(new Vector3(0, 0, phase * angle));
 
         if (hasPlayer)
         {
@@ -17,12 +22,12 @@ public class RopeObjectScript : MonoBehaviour {
             {
                 LineRenderer line = ball.GetComponent<LineRenderer>();
                 line.SetPosition(0, ball.transform.position);
-                
                 line.SetPosition(1, shoot.getMouseWorldPoint());
             }
             if (Input.GetButtonUp("Fire1"))
             {
                 hasPlayer = false;
+                ball.transform.parent = GameObject.Find("BallHolder").transform;
             }
         }
 
