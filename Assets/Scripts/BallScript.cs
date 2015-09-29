@@ -24,10 +24,7 @@ public class BallScript : MonoBehaviour {
     private ShootLogicV3 shootLogic;
 
     private Animator anim;
-    private bool animating = false;
-
-    private Sprite startSprite;
-
+    private string animationdirection = "";
 
 
     void Awake() {
@@ -44,18 +41,8 @@ public class BallScript : MonoBehaviour {
         }
 
         amountOfHits = 0;
-        if(GetComponent<Animator>())
-        {
-            anim = GetComponent<Animator>();
-        }
-        else
-        {
-            anim = gameObject.AddComponent<Animator>();
-        }
 
-
-
-        startSprite = GetComponent<SpriteRenderer>().sprite;
+        anim = GetComponent<Animator>();
     }
 
     void Update()   
@@ -65,33 +52,6 @@ public class BallScript : MonoBehaviour {
             isBoosted = true;
             StartCoroutine(ActivateBoost());
         }
-
-        if(animating)
-        {
-            Debug.Log(startSprite);
-            if(GetComponent<SpriteRenderer>().sprite.name == "stap3")
-            {
-                Debug.Log("Jahoor");
-                GetComponent<Animator>().runtimeAnimatorController = null;
-                GetComponent<SpriteRenderer>().sprite = startSprite;
-                Debug.Log("NWOEGHWOEGIHWEGOIWHEGOIW");
-
-
-                animating = false;
-                
-            }
-
-                
-
-            //  Debug.Log(anim.GetCurrentAnimatorStateInfo(0).length);
-            //Debug.Log(anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
-            //if (anim.GetCurrentAnimatorStateInfo(0).length)
-            //{
-                //anim.runtimeAnimatorController = null;
-              //  animating = false;
-            //}
-        }
-
     }
 
     IEnumerator ActivateBoost()
@@ -113,11 +73,11 @@ public class BallScript : MonoBehaviour {
             }
             else
             {
+                HitWall(coll);
                 if (coll.relativeVelocity.magnitude > 13)
                 {
                     camShake.Shake();
                 }
-                HitWall(coll);
             }
         }
     }
@@ -142,59 +102,31 @@ public class BallScript : MonoBehaviour {
 
     void HitWall(Collision2D coll)
     {
-        // Build check here on what side the Hamster hits the wall.
-        string loadResource = "Animations/HitWall/"; 
-
         // Get the angle
         float angle = transform.eulerAngles.z;
-        List<int> list = new List<int> { 0, 45, 90, 135, 180, 225, 315 };
-        int closest = list.Aggregate((x, y) => Math.Abs(x - angle) < Math.Abs(y - angle) ? x : y);
-
-        Debug.Log(angle);
+        List<int> rotationAngles = new List<int> { 0 ,90, 180, 270, 360 };
+        int rotation = rotationAngles.Aggregate((x, y) => Math.Abs(x - angle) < Math.Abs(y - angle) ? x : y);
         
-        /*
-            Bepaal welke map er gekozen moet worden voor raken.
-            Bepaal dit op de collider van chico waar deze geraakt wordt vanuit het center point van chico
-            Boven: +Y
-            Onder: -Y
-            Links: -X
-            Rechts: +X
-        */
 
-        loadResource += "bot_to_top/"+closest+"/Ball";
+        if (coll.gameObject.name.Contains("Right"))
+        {
+            HitRight(rotation);
+        }
+        else if (coll.gameObject.name.Contains("Left"))
+        {
+            HitLeft(rotation);
+        }
+        else if (coll.gameObject.name.Contains("Top"))
+        {
+            HitTop(rotation);
+        }
+        else if (coll.gameObject.name.Contains("Bottom"))
+        {
+            HitBottom(rotation);
+        }
 
-        //if(angle <= 45)
-        //{
-        //    loadResource += "bot_to_top/0/Ball";
-        //}
-        //else if(angle > 45 && angle <= 90)
-        //{
-        //    loadResource += "bot_to_top/45/Ball";
-        //}
-        //else if (angle > 90 && angle <= 135)
-        //{
-        //    loadResource += "bot_to_top/90/Ball";
-        //}
-        //else if (angle > 135 && angle <= 180)
-        //{
-        //    loadResource += "bot_to_top/135/Ball";
-        //}
-        //else if (angle > 180 && angle <= 225)
-        //{
-        //    loadResource += "bot_to_top/180/Ball";
-        //}
-        //else if (angle > 225 && angle <= 315)
-        //{
-        //    loadResource += "bot_to_top/225/Ball";
-        //}
-        //else if (angle > 315)
-        //{
-        //    loadResource += "bot_to_top/315/Ball";
-        //}
-
-        anim.runtimeAnimatorController = Resources.Load(loadResource) as RuntimeAnimatorController;
-
-        animating = true;
+        anim.speed = 2;
+        anim.Play(animationdirection + "_45");
 
         if (GameObject.Find("GameManager"))
         {
@@ -202,21 +134,109 @@ public class BallScript : MonoBehaviour {
         }
         amountOfHits++;
     }
+    
+    void HitTop(int rotation)
+    {
+        switch (rotation)
+        {
+            case 90:
+                // Right
+                animationdirection = "left_right";
+                break;
+            case 180:
+                // Bot
+                animationdirection = "top_bot";
+                break;
+            case 270:
+                // Left
+                animationdirection = "right_left";
+                break;
+            case 0:
+            case 360:
+            default:
+                // Top
+                animationdirection = "bot_top";
+                break;
+        }
 
-    void HitFromTop()
-    {
-        Debug.Log("HitFromTop");
     }
-    void HitFromBottom()
+
+    void HitBottom(int rotation)
     {
-        Debug.Log("HitFromBottom");
+        switch (rotation)
+        {
+            case 90:
+                // Right
+                animationdirection = "right_left";
+                break;
+            case 180:
+                // Bot
+                animationdirection = "bot_top";
+                break;
+            case 270:
+                // Left
+                animationdirection = "left_right";
+                break;
+            case 0:
+            case 360:
+            default:
+                // Top
+                animationdirection = "top_bot";
+                break;
+        }
+
+
     }
-    void HitFromRight()
+
+    void HitRight(int rotation)
     {
-        Debug.Log("HitFromRight");
+        switch (rotation)
+        {
+            case 90:
+                // Right
+                animationdirection = "top_bot";
+                break;
+            case 180:
+                // Bot
+                animationdirection = "right_left";
+                break;
+            case 270:
+                // Left
+                animationdirection = "bot_top";
+                break;
+            case 0:
+            case 360:
+            default:
+                // Top
+                animationdirection = "left_right";
+                break;
+        }
+
     }
-    void HitFromLeft()
+
+    void HitLeft(int rotation)
     {
-        Debug.Log("HitFromLeft");
+        switch (rotation)
+        {
+            case 90:
+                // Right
+                animationdirection = "bot_top";
+                break;
+            case 180:
+                // Bot
+                animationdirection = "left_right";
+                break;
+            case 270:
+                // Left
+                animationdirection = "top_bot";
+                break;
+            case 0:
+            case 360:
+            default:
+                // Top
+                animationdirection = "right_left";
+                break;
+        }
+
     }
 }
