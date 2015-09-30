@@ -25,6 +25,7 @@ public class BallScript : MonoBehaviour {
 
     private Animator anim;
     private string animationdirection = "";
+    private int animationAngle;
 
 
     void Awake() {
@@ -73,10 +74,14 @@ public class BallScript : MonoBehaviour {
             }
             else
             {
-                HitWall(coll);
                 if (coll.relativeVelocity.magnitude > 13)
                 {
                     camShake.Shake();
+                    HitWall(coll,true);
+                }
+                else
+                {
+                    HitWall(coll);
                 }
             }
         }
@@ -100,34 +105,41 @@ public class BallScript : MonoBehaviour {
     }
 
 
-    void HitWall(Collision2D coll)
+    void HitWall(Collision2D coll, bool showimpact = false)
     {
-        // Get the angle
-        float angle = transform.eulerAngles.z;
-        List<int> rotationAngles = new List<int> { 0 ,90, 180, 270, 360 };
-        int rotation = rotationAngles.Aggregate((x, y) => Math.Abs(x - angle) < Math.Abs(y - angle) ? x : y);
+        if(showimpact)
+        {
+            // Get the angle
+            float angle = transform.eulerAngles.z;
+            List<int> rotationAngles = new List<int> { 0, 90, 180, 270, 360 };
+            int rotation = rotationAngles.Aggregate((x, y) => Math.Abs(x - angle) < Math.Abs(y - angle) ? x : y);
+
+            if (coll.gameObject.name.Contains("Right"))
+            {
+                HitRight(rotation);
+            }
+            else if (coll.gameObject.name.Contains("Left"))
+            {
+                HitLeft(rotation);
+            }
+            else if (coll.gameObject.name.Contains("Top"))
+            {
+                HitTop(rotation);
+            }
+            else if (coll.gameObject.name.Contains("Bottom"))
+            {
+                HitBottom(rotation);
+            }
+
+            anim.speed = 1.75f;
+
+            //animationAngle = hitAngle.Aggregate((x, y) => Math.Abs(x - angle) < Math.Abs(y - angle) ? x : y);
+            animationAngle = 45;
+
+            anim.Play(animationdirection + "_45");
+        }
         
-
-        if (coll.gameObject.name.Contains("Right"))
-        {
-            HitRight(rotation);
-        }
-        else if (coll.gameObject.name.Contains("Left"))
-        {
-            HitLeft(rotation);
-        }
-        else if (coll.gameObject.name.Contains("Top"))
-        {
-            HitTop(rotation);
-        }
-        else if (coll.gameObject.name.Contains("Bottom"))
-        {
-            HitBottom(rotation);
-        }
-
-        anim.speed = 2;
-        anim.Play(animationdirection + "_45");
-
+        
         if (GameObject.Find("GameManager"))
         {
             manager.IncreaseScoreOnHit();
