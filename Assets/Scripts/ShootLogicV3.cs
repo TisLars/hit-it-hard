@@ -79,7 +79,8 @@ public class ShootLogicV3 : MonoBehaviour {
 
         Vector3 mousePos = Input.mousePosition;
         Vector3 ballPosition = Camera.main.WorldToScreenPoint(ballStartPosition);
-        Vector3 dir = (ballPosition - mousePos).normalized;
+        //Vector3 dir = (ballPosition - mousePos).normalized; //Invert
+        Vector3 dir = (mousePos - ballPosition).normalized; //Forward
         
         float velocity = Vector3.Distance(ballPosition, mousePos) * 5f;
         
@@ -101,8 +102,8 @@ public class ShootLogicV3 : MonoBehaviour {
         dragToMouse = mouseWorldPoint - ballStartPosition;
 
         // Invert Line
-        mouseWorldPoint.x = ballStartPosition.x - dragToMouse.x;
-        mouseWorldPoint.y = ballStartPosition.y - dragToMouse.y;
+        // mouseWorldPoint.x = ballStartPosition.x - dragToMouse.x;
+        // mouseWorldPoint.y = ballStartPosition.y - dragToMouse.y;
         
         // Dont extend the line to space, Hold it at max drag.
         if (dragToMouse.sqrMagnitude > maxDragSqr)
