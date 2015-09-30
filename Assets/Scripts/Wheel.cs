@@ -16,6 +16,8 @@ public class Wheel : MonoBehaviour {
     private float lerpDuration = 0.25f;
     private float lerpStartTime;
 
+    private float originGravityScale;
+
     private int turnDirection;
     private const int LEFT = 0;
     private const int RIGHT = 1;
@@ -47,10 +49,12 @@ public class Wheel : MonoBehaviour {
         }
     }
 
-    void OnTriggerEnter2D()
+    void OnTriggerEnter2D(Collider2D coll)
     {
         StartLerping();
         StartAnimator(); // Start animation.
+        originGravityScale = coll.GetComponent<Rigidbody2D>().gravityScale;
+        coll.GetComponent<Rigidbody2D>().gravityScale = 0;
         hamsterInWheel = true;
     }
 
@@ -95,6 +99,7 @@ public class Wheel : MonoBehaviour {
 
         // Stop the rotation;
         hamsterInWheel = false; //  We are not in the wheel no more.
+        ball.GetComponent<Rigidbody2D>().gravityScale = originGravityScale;
         animator.speed = 0;
     }
 

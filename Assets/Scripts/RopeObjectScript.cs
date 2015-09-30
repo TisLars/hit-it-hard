@@ -6,14 +6,15 @@ public class RopeObjectScript : MonoBehaviour {
     GameObject ball;
     ShootLogicV3 shoot;
     private bool hasPlayer = false;
+    float originGravityScale;
 
     private float phase, time;
-    private float period = 1f;
-    private float angle = 35f;
+    public float timeToSwing = 1f;
+    public float angle = 35f;
 
 	void Update () {
         time = time + Time.deltaTime;
-        phase = Mathf.Sin(time / period);
+        phase = Mathf.Sin(time / timeToSwing);
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, phase * angle));
 
         if (hasPlayer)
@@ -27,6 +28,7 @@ public class RopeObjectScript : MonoBehaviour {
             if (Input.GetButtonUp("Fire1"))
             {
                 hasPlayer = false;
+                ball.GetComponent<Rigidbody2D>().gravityScale = originGravityScale;
                 ball.transform.parent = GameObject.Find("BallHolder").transform;
             }
         }
@@ -38,6 +40,8 @@ public class RopeObjectScript : MonoBehaviour {
         if (coll.name == "Ball")
         {
             ball = GameObject.Find(coll.name);
+            originGravityScale = ball.GetComponent<Rigidbody2D>().gravityScale;
+            ball.GetComponent<Rigidbody2D>().gravityScale = 0;
             Destroy(coll.GetComponent<ShootLogicV3>());
             coll.gameObject.AddComponent<ShootLogicV3>();
             shoot = coll.GetComponent<ShootLogicV3>();
