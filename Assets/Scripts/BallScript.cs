@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System;
 
 public class BallScript : MonoBehaviour {
 
@@ -21,6 +24,11 @@ public class BallScript : MonoBehaviour {
     private GameObject LosingScreen;
     private ShootLogicV3 shootLogic;
 
+    private Animator anim;
+    private string animationdirection = "";
+    private int animationAngle;
+
+
     void Awake() {
         rnd = new System.Random();
         GetComponent<TrailRenderer>().enabled = false;
@@ -35,9 +43,11 @@ public class BallScript : MonoBehaviour {
         }
 
         amountOfHits = 0;
+
+        anim = GetComponent<Animator>();
     }
 
-    void Update()
+    void Update()   
     {
         if (Input.GetButtonDown("Fire1") && shootLogic.isShot == true && isBoosted == false && amountOfBoost > 0)
         {
@@ -71,8 +81,12 @@ public class BallScript : MonoBehaviour {
                 if (coll.relativeVelocity.magnitude > 13)
                 {
                     camShake.Shake();
+                    HitWall(coll,true);
                 }
-                HitWall();
+                else
+                {
+                    HitWall(coll);
+                }
             }
         }
     }
@@ -94,8 +108,42 @@ public class BallScript : MonoBehaviour {
         return amountOfHits;
     }
 
-    void HitWall()
+
+    void HitWall(Collision2D coll, bool showimpact = false)
     {
+        if(showimpact)
+        {
+            // Get the angle
+            float angle = transform.eulerAngles.z;
+            List<int> rotationAngles = new List<int> { 0, 90, 180, 270, 360 };
+            int rotation = rotationAngles.Aggregate((x, y) => Math.Abs(x - angle) < Math.Abs(y - angle) ? x : y);
+
+            if (coll.gameObject.name.Contains("Right"))
+            {
+                HitRight(rotation);
+            }
+            else if (coll.gameObject.name.Contains("Left"))
+            {
+                HitLeft(rotation);
+            }
+            else if (coll.gameObject.name.Contains("Top"))
+            {
+                HitTop(rotation);
+            }
+            else if (coll.gameObject.name.Contains("Bottom"))
+            {
+                HitBottom(rotation);
+            }
+
+            anim.speed = 1.75f;
+
+            //animationAngle = hitAngle.Aggregate((x, y) => Math.Abs(x - angle) < Math.Abs(y - angle) ? x : y);
+            animationAngle = 45;
+
+            anim.Play(animationdirection + "_45");
+        }
+        
+        
         if (GameObject.Find("GameManager"))
         {
             manager.IncreaseScoreOnHit();
@@ -110,5 +158,109 @@ public class BallScript : MonoBehaviour {
     public void setAmountOfBoost(int value)
     {
         amountOfBoost = value;
+    }
+    
+    void HitTop(int rotation)
+    {
+        switch (rotation)
+        {
+            case 90:
+                // Right
+                animationdirection = "left_right";
+                break;
+            case 180:
+                // Bot
+                animationdirection = "top_bot";
+                break;
+            case 270:
+                // Left
+                animationdirection = "right_left";
+                break;
+            case 0:
+            case 360:
+            default:
+                // Top
+                animationdirection = "bot_top";
+                break;
+        }
+
+    }
+
+    void HitBottom(int rotation)
+    {
+        switch (rotation)
+        {
+            case 90:
+                // Right
+                animationdirection = "right_left";
+                break;
+            case 180:
+                // Bot
+                animationdirection = "bot_top";
+                break;
+            case 270:
+                // Left
+                animationdirection = "left_right";
+                break;
+            case 0:
+            case 360:
+            default:
+                // Top
+                animationdirection = "top_bot";
+                break;
+        }
+
+
+    }
+
+    void HitRight(int rotation)
+    {
+        switch (rotation)
+        {
+            case 90:
+                // Right
+                animationdirection = "top_bot";
+                break;
+            case 180:
+                // Bot
+                animationdirection = "right_left";
+                break;
+            case 270:
+                // Left
+                animationdirection = "bot_top";
+                break;
+            case 0:
+            case 360:
+            default:
+                // Top
+                animationdirection = "left_right";
+                break;
+        }
+
+    }
+
+    void HitLeft(int rotation)
+    {
+        switch (rotation)
+        {
+            case 90:
+                // Right
+                animationdirection = "bot_top";
+                break;
+            case 180:
+                // Bot
+                animationdirection = "left_right";
+                break;
+            case 270:
+                // Left
+                animationdirection = "top_bot";
+                break;
+            case 0:
+            case 360:
+            default:
+                // Top
+                animationdirection = "right_left";
+                break;
+        }
     }
 }
