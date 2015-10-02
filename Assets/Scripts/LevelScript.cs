@@ -108,5 +108,4 @@ public class LevelScript : MonoBehaviour {
     {
         return minimalHitRule;
     }
-
 }

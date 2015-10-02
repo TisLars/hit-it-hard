@@ -7,9 +7,11 @@ public class ShootLogicV3 : MonoBehaviour {
     public float lineWidth = 0.30f;
     public float acceleration = 2.0f;
 
+    private Vector3 mouseWorldPoint;
+
     private float maxDragSqr;
 
-    private bool isClicking;
+    public bool isClicking;
     private bool drawing;
     public bool isShot;
 
@@ -98,7 +100,7 @@ public class ShootLogicV3 : MonoBehaviour {
     
     void Dragging()
     {
-        Vector3 mouseWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         dragToMouse = mouseWorldPoint - ballStartPosition;
 
         // Invert Line
@@ -117,5 +119,15 @@ public class ShootLogicV3 : MonoBehaviour {
         
         mouseWorldPoint.z = 0f; // Set Z to 0 -> we dont need this in a 2D game.
         lineRenderer.SetPosition(1, mouseWorldPoint);
+    }
+
+    public Vector3 getMouseWorldPoint()
+    {
+        return mouseWorldPoint;
+    }
+
+    public bool getIsClicking()
+    {
+        return isClicking;
     }
 }

@@ -14,14 +14,19 @@ public class Goal : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (ball.getAmountOfHits() >= level.getMinHitRule())
+        if (gameObject.name == "TubeEnd")
         {
-            level.LevelComplete();
-        }
-        else
+            if (ball.getAmountOfHits() >= level.getMinHitRule())
+            {
+                level.LevelComplete();
+            }
+            else
+            {
+                level.LevelFailed();
+            }
+        } else
         {
-            level.LevelFailed();
+            Debug.Log("Turn around fool!");
         }
-
     }
 }
