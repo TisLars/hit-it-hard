@@ -44,6 +44,9 @@ public class BallScript : MonoBehaviour {
             isBoosted = true;
             StartCoroutine(ActivateBoost());
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            Application.LoadLevel(Application.loadedLevel + 1);
     }
 
     IEnumerator ActivateBoost()

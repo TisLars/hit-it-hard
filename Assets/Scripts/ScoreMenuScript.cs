@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Facebook.Unity;
 
 public class ScoreMenuScript : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class ScoreMenuScript : MonoBehaviour
     public Button returnButton;
     private Text scoreText;
     private Text timerText;
+
+    int userScore;
 
     void Start()
     {
@@ -35,7 +38,8 @@ public class ScoreMenuScript : MonoBehaviour
     {
         if(manager)
         {
-            scoreText.text = "Total wallhits: " + manager.getScore();
+            userScore = manager.getScore();
+            scoreText.text = "Total wallhits: " + userScore;
             manager.setScore(0);
         }
     }
@@ -43,6 +47,21 @@ public class ScoreMenuScript : MonoBehaviour
     void SetTimerText()
     {
          timerText.text = "Time: " + System.String.Format("{0:0}:{1:00.000}", Mathf.Floor(timeAttackSessionScript.getTime()/60), timeAttackSessionScript.getTime() % 60);
+    }
+
+    public void ShareScore()
+    {
+        if (FB.IsLoggedIn)
+        {
+            System.Uri pictureUri = new System.Uri("http://i.imgur.com/TOkHft1.png");
+            //System.Uri linkUri = new System.Uri("https://play.google.com/store/apps/details?id=com.maildev.slamithard");
+            FB.FeedShare(
+                    linkName: "Checkout Slamster on Android!",
+                    linkCaption: "I completed with " + userScore + " wall hits! Can you beat it?",
+                    picture: pictureUri
+                    );
+        }
+
     }
 
     public void ReturnToMenu()
