@@ -97,7 +97,6 @@ public class LevelScript : MonoBehaviour {
     public void LevelFailed()
     {
         Application.LoadLevel(Application.loadedLevel);
-        Destroy(ball);
     }
 
     public int getMaxHitRule()
