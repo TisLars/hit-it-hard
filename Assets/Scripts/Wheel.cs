@@ -60,14 +60,14 @@ public class Wheel : MonoBehaviour {
 
     void RotateHamster()
     {
-        if(turnDirection == RIGHT)
-        {
-            ball.transform.Rotate(0, 0, (0 - (Time.deltaTime * 500)));
-        }
-        else
-        {
-            ball.transform.Rotate(0, 0, Time.deltaTime * 500);
-        }
+        //if(turnDirection == RIGHT)
+        //{
+        //    ball.transform.Rotate(0, 0, (0 - (Time.deltaTime * 500)));
+        //}
+        //else
+        //{
+        //    ball.transform.Rotate(0, 0, Time.deltaTime * 500);
+        //}
        
     }
 
