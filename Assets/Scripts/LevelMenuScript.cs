@@ -19,9 +19,15 @@ public class LevelMenuScript : MonoBehaviour {
 
     void UnlockLevels()
     {
-        for (int i = 2; i < Application.levelCount - 8; i++)
+        for (int i = 2; i < Application.levelCount - 4; i++)
+        {
+            Debug.Log("show " + PlayerPrefs.GetInt("Level" + i));
             if (PlayerPrefs.GetInt("Level" + i) == 1)
+            {
                 GameObject.Find("LockedLevel" + i).SetActive(false);
+                Debug.Log("unlocked" + i);
+            }
+        }
     }
 
     public void ReturnToMainMenu()
