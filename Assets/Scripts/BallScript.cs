@@ -74,10 +74,11 @@ public class BallScript : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        PlaySound(rnd.Next(0,2));
+        PlaySound(rnd.Next(0, 2));
+
         if (coll.gameObject.name.Contains("Wall"))
         {
-            if(amountOfHits >= level.maximumHitRule && level.maximumHitRule != 0)
+            if (amountOfHits >= level.maximumHitRule && level.maximumHitRule != 0)
             {
                 KillIt();
             }
@@ -86,14 +87,17 @@ public class BallScript : MonoBehaviour {
                 if (coll.relativeVelocity.magnitude > 13)
                 {
                     camShake.Shake();
-                    HitWall(coll,true);
                 }
-                else
+
+                if (GameObject.Find("GameManager"))
                 {
-                    HitWall(coll);
+                    manager.IncreaseScoreOnHit();
                 }
+                amountOfHits++;
+
             }
         }
+        HitWall(coll);
     }
 
     void PlaySound(int clip)
@@ -114,46 +118,49 @@ public class BallScript : MonoBehaviour {
     }
 
 
-    void HitWall(Collision2D coll, bool showimpact = false)
+    void HitWall(Collision2D coll)
     {
-        if(showimpact)
+        // Get the angle
+        float angle = transform.eulerAngles.z;
+        List<int> rotationAngles = new List<int> { 0, 90, 180, 270, 360 };
+        int rotation = rotationAngles.Aggregate((x, y) => Math.Abs(x - angle) < Math.Abs(y - angle) ? x : y);
+        
+        Vector3 contactPoint = coll.collider.bounds.center;
+        Vector3 center = coll.contacts[0].point;
+
+        bool right = contactPoint.x > center.x;
+        bool left = contactPoint.x < center.x;
+        bool up = false;
+        bool down = false;
+
+        if (contactPoint.y > contactPoint.x)
         {
-            // Get the angle
-            float angle = transform.eulerAngles.z;
-            List<int> rotationAngles = new List<int> { 0, 90, 180, 270, 360 };
-            int rotation = rotationAngles.Aggregate((x, y) => Math.Abs(x - angle) < Math.Abs(y - angle) ? x : y);
+            right = false;
+            left = false;
+            up = contactPoint.y > center.y;
+            down = contactPoint.y < center.y;
+        }
 
-            if (coll.gameObject.name.Contains("Right"))
-            {
-                HitRight(rotation);
-            }
-            else if (coll.gameObject.name.Contains("Left"))
-            {
-                HitLeft(rotation);
-            }
-            else if (coll.gameObject.name.Contains("Top"))
-            {
-                HitTop(rotation);
-            }
-            else if (coll.gameObject.name.Contains("Bottom"))
-            {
-                HitBottom(rotation);
-            }
-
-            anim.speed = 1.75f;
-
-            //animationAngle = hitAngle.Aggregate((x, y) => Math.Abs(x - angle) < Math.Abs(y - angle) ? x : y);
-            animationAngle = 45;
-
-            anim.Play(animationdirection + "_45");
+        if (right)
+        {
+            HitRight(rotation);
+        }
+        else if (left)
+        {
+            HitLeft(rotation);
+        }
+        else if (up)
+        {
+            HitTop(rotation);
+        }
+        else if (down)
+        {
+            HitBottom(rotation);
         }
         
-        
-        if (GameObject.Find("GameManager"))
-        {
-            manager.IncreaseScoreOnHit();
-        }
-        amountOfHits++;
+        animationAngle = 45;
+        anim.speed = 1.75f;
+        anim.Play(animationdirection + "_" + animationAngle);
     }
 
     public int getAmountOfBoost()
