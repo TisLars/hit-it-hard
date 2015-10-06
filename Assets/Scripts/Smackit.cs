@@ -36,20 +36,11 @@ public class Smackit : MonoBehaviour {
         {
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -force), ForceMode2D.Impulse);
         }
-
     }
 
     // Use this for initialization
     void Start () {
-
         StartCoroutine(launchBall());
-
-        
-        
     }
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

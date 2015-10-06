@@ -8,9 +8,6 @@ public class GameManagerScript : MonoBehaviour {
 
     void Awake()
     {
-
-        AudioListener.volume = 0;
-
         if (!manager)
         {
             manager = this;
