@@ -59,7 +59,6 @@ public class BallScript : MonoBehaviour {
         {
             Application.LoadLevel(Application.loadedLevel + 1);
         }
-
     }
 
     IEnumerator ActivateBoost()

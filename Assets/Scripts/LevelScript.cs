@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class LevelScript : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class LevelScript : MonoBehaviour {
     public int showTextTimer = 3;
 
     private GameObject ball;
+    private GameObject cam;
     private BallScript ballScript;
 
     private GameObject levelTextPanel;
@@ -34,6 +36,17 @@ public class LevelScript : MonoBehaviour {
         setLevelIntroText();
         if (!PlayerPrefs.HasKey("Level" + Application.loadedLevel))
             PlayerPrefs.SetInt("Level" + Application.loadedLevel, 1);
+
+        /**
+         * CAMERA
+         * at start of a level, move the camera
+         */
+        cam = GameObject.Find("Render");
+        if (Application.loadedLevel == 13)
+        {
+            cam = new GameObject("PreviewCam");
+            cam.AddComponent<PreviewCamScript>();
+        }
     }
 
     void Update()
