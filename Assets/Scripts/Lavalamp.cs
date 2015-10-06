@@ -11,7 +11,7 @@ public class Lavalamp : MonoBehaviour {
     {
         yield return new WaitForSeconds(secondsToWait);
 
-        animator.speed = 1;
+        animator.speed = 0.5f;
 
     }
 
