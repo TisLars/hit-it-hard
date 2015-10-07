@@ -30,22 +30,26 @@ public class RopeObjectScript : MonoBehaviour {
 
         if (hasPlayer)
         {
-
-            if (ball.GetComponent<ShootLogicV3>().getIsClicking())
+            foreach (Touch t in Input.touches)
             {
-                LineRenderer line = ball.GetComponent<LineRenderer>();
-                line.SetPosition(0, new Vector3(ball.transform.position.x , ball.transform.position.y, -1f));
-                
-                shoot.Dragging(true);
+                if (t.phase == TouchPhase.Ended)
+                {
+                    SlamHamster();
+                }
             }
 
+            if (Input.GetMouseButtonUp(0))
+            {
+                SlamHamster();
+            }
+            
             if (Input.GetButtonUp("Fire1"))
             {
                 isLerping = false;
                 hasPlayer = false;
                 isShot = true;
                 ball.GetComponent<Rigidbody2D>().gravityScale = originGravityScale;
-                //ball.transform.parent = GameObject.Find("BallHolder").transform;
+                ball.transform.parent = GameObject.Find("BallHolder").transform;
             }
         }
         
@@ -71,6 +75,7 @@ public class RopeObjectScript : MonoBehaviour {
         endPos = transform.position;
         endPos.y -= 3.3f;
         endPos.x = endPos.x - 0.5f;
+        endPos.z = -1f;
         
         isLerping = true;
     }
@@ -80,14 +85,25 @@ public class RopeObjectScript : MonoBehaviour {
         isShot = false;
     }
 
+    void SlamHamster()
+    {
+        Vector3 inputPosition = Input.mousePosition;
+        Vector3 wheelPosition = Camera.main.WorldToScreenPoint(ball.transform.position);
+        Vector3 dir = (inputPosition - wheelPosition).normalized;
+
+        ball.GetComponent<Rigidbody2D>().AddForce(dir * (500f * 1.5f)); // Shoot it;
+    }
+    
     void OnTriggerEnter2D(Collider2D coll)
     {
         if(isShot == false)
         {
             ball = GameObject.Find(coll.name);
+
             originGravityScale = ball.GetComponent<Rigidbody2D>().gravityScale;
 
             ball.GetComponent<Rigidbody2D>().gravityScale = 0;
+
             Destroy(coll.GetComponent<ShootLogicV3>());
             coll.gameObject.AddComponent<ShootLogicV3>();
             shoot = coll.GetComponent<ShootLogicV3>();
