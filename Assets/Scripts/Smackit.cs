@@ -13,12 +13,14 @@ public class Smackit : MonoBehaviour {
 
     public int secondsToWaitForLaunch;
 
+    public ShootLogicV3 shoot;
 
     IEnumerator launchBall()
     {
         yield return new WaitForSeconds(secondsToWaitForLaunch);
     
         GetComponent<Rigidbody2D>().isKinematic = false;
+        shoot.isShot = true;
 
         if (direction.ToString() == "LEFT")
         {
@@ -40,6 +42,7 @@ public class Smackit : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        shoot = GetComponent<ShootLogicV3>();
         StartCoroutine(launchBall());
     }
 	

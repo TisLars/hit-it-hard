@@ -22,9 +22,12 @@ public class EyeFollowScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
-        transform.position = Vector3.MoveTowards(startPos, ball.transform.position, 10f * Time.deltaTime);
-        
 
+        if (ball.GetComponent<ShootLogicV3>().isShot)
+        {
+            transform.position = Vector3.MoveTowards(startPos, ball.transform.position, 10f * Time.deltaTime);
+        }
+
+        
 	}
 }
