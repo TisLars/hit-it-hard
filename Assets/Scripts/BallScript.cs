@@ -55,10 +55,10 @@ public class BallScript : MonoBehaviour {
             StartCoroutine(ActivateBoost());
         }
 
-        if (Input.GetButtonDown("Fire2"))
-        {
-            Application.LoadLevel(Application.loadedLevel + 1);
-        }
+        //if (Input.GetButtonDown("Fire2"))
+        //{
+        //    Application.LoadLevel(Application.loadedLevel + 1);
+        //}
     }
 
     IEnumerator ActivateBoost()

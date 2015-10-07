@@ -113,7 +113,7 @@ public class MenuScript : MonoBehaviour {
             settings.SetActive(false);
             main.SetActive(true);
         }
-        if (Input.GetButtonDown("Fire3"))
-            PlayerPrefs.DeleteAll();
+        //if (Input.GetButtonDown("Fire3"))
+        //    PlayerPrefs.DeleteAll();
     }
 }

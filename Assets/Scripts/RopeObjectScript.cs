@@ -104,9 +104,9 @@ public class RopeObjectScript : MonoBehaviour {
 
             ball.GetComponent<Rigidbody2D>().gravityScale = 0;
 
-            Destroy(coll.GetComponent<ShootLogicV3>());
-            coll.gameObject.AddComponent<ShootLogicV3>();
-            shoot = coll.GetComponent<ShootLogicV3>();
+            //Destroy(coll.GetComponent<ShootLogicV3>());
+            //coll.gameObject.AddComponent<ShootLogicV3>();
+            //shoot = coll.GetComponent<ShootLogicV3>();
 
             coll.transform.parent = gameObject.transform;
             coll.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
