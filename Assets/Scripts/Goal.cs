@@ -24,9 +24,10 @@ public class Goal : MonoBehaviour {
             {
                 level.LevelFailed();
             }
-        } else
+        }
+        else
         {
-            Debug.Log("Turn around fool!");
+        //    Debug.Log("Turn around fool!");
         }
     }
 }

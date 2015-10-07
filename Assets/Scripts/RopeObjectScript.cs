@@ -34,9 +34,9 @@ public class RopeObjectScript : MonoBehaviour {
             if (ball.GetComponent<ShootLogicV3>().getIsClicking())
             {
                 LineRenderer line = ball.GetComponent<LineRenderer>();
-                line.SetPosition(0, ball.transform.position);
-                shoot.Dragging();
-                //line.SetPosition(1, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                line.SetPosition(0, new Vector3(ball.transform.position.x , ball.transform.position.y, -1f));
+                
+                shoot.Dragging(true);
             }
 
             if (Input.GetButtonUp("Fire1"))
@@ -45,7 +45,7 @@ public class RopeObjectScript : MonoBehaviour {
                 hasPlayer = false;
                 isShot = true;
                 ball.GetComponent<Rigidbody2D>().gravityScale = originGravityScale;
-                ball.transform.parent = GameObject.Find("BallHolder").transform;
+                //ball.transform.parent = GameObject.Find("BallHolder").transform;
             }
         }
         

@@ -76,7 +76,7 @@ public class ShootLogicV3 : MonoBehaviour {
     void Shoot()
     {
         //Destroy(lineRenderer); // First remove the line.
-        lineRenderer.SetPosition(0, new Vector3(transform.position.x,transform.position.y, -100));
+        lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y, -100));
         lineRenderer.SetPosition(1, new Vector3(transform.position.x, transform.position.y, -100));
 
         Vector3 mousePos = Input.mousePosition;
@@ -98,7 +98,7 @@ public class ShootLogicV3 : MonoBehaviour {
         isShot = true;
     }
     
-    public void Dragging()
+    public void Dragging(bool fromelsewhere = false)
     {
         mouseWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         dragToMouse = mouseWorldPoint - ballStartPosition;
@@ -118,7 +118,11 @@ public class ShootLogicV3 : MonoBehaviour {
         }
         
         mouseWorldPoint.z = 0f; // Set Z to 0 -> we dont need this in a 2D game.
-        lineRenderer.SetPosition(1, mouseWorldPoint);
+        if (!fromelsewhere)
+        {
+            lineRenderer.SetPosition(1, mouseWorldPoint);
+        }
+        
     }
 
     public Vector3 getMouseWorldPoint()
