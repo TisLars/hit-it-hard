@@ -28,6 +28,5 @@ public class EyeFollowScript : MonoBehaviour {
             transform.position = Vector3.MoveTowards(startPos, ball.transform.position, 10f * Time.deltaTime);
         }
 
-        
 	}
 }
