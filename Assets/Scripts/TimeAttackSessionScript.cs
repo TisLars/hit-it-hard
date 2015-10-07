@@ -11,7 +11,7 @@ public class TimeAttackSessionScript : MonoBehaviour {
 
     void Update()
     {
-        time += Time.deltaTime;
+        time += Time.deltaTime * 1000;
     }
 
     public float getTime()

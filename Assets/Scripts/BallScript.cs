@@ -84,6 +84,9 @@ public class BallScript : MonoBehaviour {
             }
             else
             {
+                if (coll.relativeVelocity.magnitude > 24)
+                    Social.ReportProgress("CgkIrNyjyeIVEAIQBA", 100.0f, (bool success) => { });
+
                 if (coll.relativeVelocity.magnitude > 13)
                 {
                     camShake.Shake();

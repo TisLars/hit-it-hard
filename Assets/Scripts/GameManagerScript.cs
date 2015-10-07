@@ -33,4 +33,10 @@ public class GameManagerScript : MonoBehaviour {
     {
         totalHits = value;
     }
+
+    public void Login()
+    {
+
+    }
+
 }

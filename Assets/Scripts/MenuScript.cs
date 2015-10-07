@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using UnityEngine.SocialPlatforms;
 
 public class MenuScript : MonoBehaviour {
 
@@ -18,7 +21,8 @@ public class MenuScript : MonoBehaviour {
     public GameObject settings;
     public GameObject TimeAttackSession;
 
-    void Start () {
+    void Start()
+    {
         playButton = playButton.GetComponent<Button>();
         timeAttackButton = timeAttackButton.GetComponent<Button>();
         volumeButton = volumeButton.GetComponent<Button>();
@@ -29,12 +33,26 @@ public class MenuScript : MonoBehaviour {
         if (!PlayerPrefs.HasKey("volume"))
         {
             PlayerPrefs.SetInt("volume", 1);
-        } else
+        }
+        else
         {
             if (PlayerPrefs.GetInt("volume") == 0)
                 Mute();
         }
-	}
+
+        // GOOGLE PLAY SERVICES
+        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();
+
+        PlayGamesPlatform.InitializeInstance(config);
+        // recommended for debugging:
+        PlayGamesPlatform.DebugLogEnabled = true;
+        // Activate the Google Play Games platform
+        PlayGamesPlatform.Activate();
+    }
+
+    public void AuthorizeGoogle() { Social.localUser.Authenticate((bool success) => { }); }
+    public void ShowAchievements() { Social.ShowAchievementsUI(); }
+    public void ShowLeaderboard() { Social.ShowLeaderboardUI(); }
 
     public void GoToLevelMenu()
     {

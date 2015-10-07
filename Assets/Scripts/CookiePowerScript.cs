@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GooglePlayGames;
+using UnityEngine.SocialPlatforms;
 
 public class CookiePowerScript : MonoBehaviour {
 
@@ -7,5 +9,8 @@ public class CookiePowerScript : MonoBehaviour {
     {
         coll.GetComponent<BallScript>().setAmountOfBoost(coll.GetComponent<BallScript>().getAmountOfBoost() + 1);
         Destroy(gameObject);
+
+        Social.ReportProgress("CgkIrNyjyeIVEAIQBg", 100.0f, (bool success) => {
+        });
     }
 }
