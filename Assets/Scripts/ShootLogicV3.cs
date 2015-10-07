@@ -98,7 +98,7 @@ public class ShootLogicV3 : MonoBehaviour {
         isShot = true;
     }
     
-    void Dragging()
+    public void Dragging()
     {
         mouseWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         dragToMouse = mouseWorldPoint - ballStartPosition;

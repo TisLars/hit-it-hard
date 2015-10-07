@@ -21,8 +21,7 @@ public class Wheel : MonoBehaviour {
     private int turnDirection;
     private const int LEFT = 0;
     private const int RIGHT = 1;
-
-
+    
     private GameObject circleEffectOnTouch;
     private LineRenderer line;
     private bool slammed = false;
@@ -92,7 +91,7 @@ public class Wheel : MonoBehaviour {
         Vector3 inputPosition = Input.mousePosition;
         Vector3 wheelPosition = Camera.main.WorldToScreenPoint(transform.position);
         Vector3 dir = (inputPosition - wheelPosition).normalized;
-
+        
         ball.GetComponent<Rigidbody2D>().AddForce(dir * (500f * shootAcceleration)); // Shoot it;
         
         slammed = true;
@@ -134,7 +133,7 @@ public class Wheel : MonoBehaviour {
         //
         if(hamsterInWheel)
         {
-            RotateHamster(); // Rotate the hamster with the direction the wheel is spinning.
+            //RotateHamster(); // Rotate the hamster with the direction the wheel is spinning.
 
             foreach (Touch t in Input.touches)
             {
