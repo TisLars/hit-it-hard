@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PreviewCamScript : MonoBehaviour {
-
+    /**
     GameObject cam;
 
     int timeAlive = 0;
@@ -15,6 +15,6 @@ public class PreviewCamScript : MonoBehaviour {
 
 	void Update()
     {
-        Debug.Log(cam);
-    }
+
+    }*/
 }

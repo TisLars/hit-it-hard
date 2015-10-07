@@ -3,20 +3,19 @@ using System.Collections;
 
 public class CameraFollowScript : MonoBehaviour {
 
-    private Vector2 camPosition;
-    public float maxVertical;
-    public float maxHorizontal;
+    GameObject ball;
+    GameObject cam;
+
+    private float distance = 10;
 
     void Start()
     {
-        camPosition = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+        ball = GameObject.Find("Ball");
+        cam = GameObject.Find("Render");
     }
 
     void Update()
     {
-        if (gameObject.transform.position.y > maxVertical)
-            camPosition = new Vector2(gameObject.transform.position.x, maxVertical);
-        if (gameObject.transform.position.x > maxHorizontal)
-            camPosition = new Vector2(maxHorizontal, gameObject.transform.position.y);
+        cam.transform.position = new Vector3(ball.transform.position.x, ball.transform.position.y, ball.transform.position.z - distance);
     }
 }
