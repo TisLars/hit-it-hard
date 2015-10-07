@@ -48,9 +48,9 @@ public class MenuScript : MonoBehaviour {
         PlayGamesPlatform.DebugLogEnabled = true;
         // Activate the Google Play Games platform
         PlayGamesPlatform.Activate();
+        Social.localUser.Authenticate((bool success) => { });
     }
 
-    public void AuthorizeGoogle() { Social.localUser.Authenticate((bool success) => { }); }
     public void ShowAchievements() { Social.ShowAchievementsUI(); }
     public void ShowLeaderboard() { Social.ShowLeaderboardUI(); }
 
