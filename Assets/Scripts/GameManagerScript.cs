@@ -5,6 +5,7 @@ public class GameManagerScript : MonoBehaviour {
     public static GameManagerScript manager;
 
     int totalHits = 0;
+    bool warpActivated;
 
     void Awake()
     {
@@ -34,9 +35,6 @@ public class GameManagerScript : MonoBehaviour {
         totalHits = value;
     }
 
-    public void Login()
-    {
-
-    }
-
+    public void setWarpActivated(bool value) { warpActivated = value; }
+    public bool getWarpActivated() { return warpActivated; }
 }

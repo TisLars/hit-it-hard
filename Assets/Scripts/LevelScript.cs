@@ -18,6 +18,8 @@ public class LevelScript : MonoBehaviour {
 
     private ShootLogicV3 shootScript;
 
+    private bool warpToEndActivated;
+
     void Awake()
     {
         levelText = GameObject.Find("LevelText");
@@ -46,6 +48,11 @@ public class LevelScript : MonoBehaviour {
         {
             cam = new GameObject("PreviewCam");
             cam.AddComponent<PreviewCamScript>();
+
+            if (GameObject.Find("GameManager").GetComponent<GameManagerScript>().getWarpActivated())
+            {
+                GameObject.Find("GameManager").GetComponent<GameManagerScript>().setWarpActivated(false);
+            }
         }
     }
 
