@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class LevelScript : MonoBehaviour {
 
@@ -9,12 +10,15 @@ public class LevelScript : MonoBehaviour {
     public int showTextTimer = 3;
 
     private GameObject ball;
+    private GameObject cam;
     private BallScript ballScript;
 
     private GameObject levelTextPanel;
     private GameObject levelText;
 
     private ShootLogicV3 shootScript;
+
+    private bool warpToEndActivated;
 
     void Awake()
     {
@@ -34,6 +38,22 @@ public class LevelScript : MonoBehaviour {
         setLevelIntroText();
         if (!PlayerPrefs.HasKey("Level" + Application.loadedLevel))
             PlayerPrefs.SetInt("Level" + Application.loadedLevel, 1);
+
+        /**
+         * CAMERA
+         * at start of a level, move the camera
+         */
+        cam = GameObject.Find("Render");
+        if (Application.loadedLevel == 13)
+        {
+            cam = new GameObject("PreviewCam");
+            cam.AddComponent<PreviewCamScript>();
+
+            if (GameObject.Find("GameManager").GetComponent<GameManagerScript>().getWarpActivated())
+            {
+                GameObject.Find("GameManager").GetComponent<GameManagerScript>().setWarpActivated(false);
+            }
+        }
     }
 
     void Update()
@@ -97,7 +117,6 @@ public class LevelScript : MonoBehaviour {
     public void LevelFailed()
     {
         Application.LoadLevel(Application.loadedLevel);
-        Destroy(ball);
     }
 
     public int getMaxHitRule()
@@ -108,5 +127,4 @@ public class LevelScript : MonoBehaviour {
     {
         return minimalHitRule;
     }
-
 }

@@ -7,9 +7,11 @@ public class ShootLogicV3 : MonoBehaviour {
     public float lineWidth = 0.30f;
     public float acceleration = 2.0f;
 
+    private Vector3 mouseWorldPoint;
+
     private float maxDragSqr;
 
-    private bool isClicking;
+    public bool isClicking;
     private bool drawing;
     public bool isShot;
 
@@ -74,12 +76,13 @@ public class ShootLogicV3 : MonoBehaviour {
     void Shoot()
     {
         //Destroy(lineRenderer); // First remove the line.
-        lineRenderer.SetPosition(0, new Vector3(transform.position.x,transform.position.y, -100));
+        lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y, -100));
         lineRenderer.SetPosition(1, new Vector3(transform.position.x, transform.position.y, -100));
 
         Vector3 mousePos = Input.mousePosition;
         Vector3 ballPosition = Camera.main.WorldToScreenPoint(ballStartPosition);
-        Vector3 dir = (ballPosition - mousePos).normalized;
+        //Vector3 dir = (ballPosition - mousePos).normalized; //Invert
+        Vector3 dir = (mousePos - ballPosition).normalized; //Forward
         
         float velocity = Vector3.Distance(ballPosition, mousePos) * 5f;
         
@@ -95,14 +98,14 @@ public class ShootLogicV3 : MonoBehaviour {
         isShot = true;
     }
     
-    void Dragging()
+    public void Dragging()
     {
-        Vector3 mouseWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         dragToMouse = mouseWorldPoint - ballStartPosition;
 
         // Invert Line
-        mouseWorldPoint.x = ballStartPosition.x - dragToMouse.x;
-        mouseWorldPoint.y = ballStartPosition.y - dragToMouse.y;
+        // mouseWorldPoint.x = ballStartPosition.x - dragToMouse.x;
+        // mouseWorldPoint.y = ballStartPosition.y - dragToMouse.y;
         
         // Dont extend the line to space, Hold it at max drag.
         if (dragToMouse.sqrMagnitude > maxDragSqr)
@@ -116,5 +119,15 @@ public class ShootLogicV3 : MonoBehaviour {
         
         mouseWorldPoint.z = 0f; // Set Z to 0 -> we dont need this in a 2D game.
         lineRenderer.SetPosition(1, mouseWorldPoint);
+    }
+
+    public Vector3 getMouseWorldPoint()
+    {
+        return mouseWorldPoint;
+    }
+
+    public bool getIsClicking()
+    {
+        return isClicking;
     }
 }

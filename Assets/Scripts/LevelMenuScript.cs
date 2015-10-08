@@ -8,7 +8,6 @@ public class LevelMenuScript : MonoBehaviour {
 
     void Start()
     {
-        returnButton = returnButton.GetComponent<Button>();
         UnlockLevels();
     }
 
@@ -19,7 +18,7 @@ public class LevelMenuScript : MonoBehaviour {
 
     void UnlockLevels()
     {
-        for (int i = 2; i < Application.levelCount - 8; i++)
+        for (int i = 1; i < Application.levelCount - 3; i++)
             if (PlayerPrefs.GetInt("Level" + i) == 1)
                 GameObject.Find("LockedLevel" + i).SetActive(false);
     }

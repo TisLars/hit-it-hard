@@ -1,0 +1,6 @@
+lastUpgrade=00925
+proj.AppId=748014857772
+proj.ConstantsClassName=Achievements
+and.ResourceData=%3c%3fxml+version%3d%221.0%22+encoding%3d%22utf-8%22%3f%3e%0d%0a%3c%21--%0d%0aGoogle+Play+game+services+IDs.%0d%0aSave+this+file+as+res%2fvalues%2fgames-ids.xml+in+your+project.%0d%0a--%3e%0d%0a%3cresources%3e%0d%0a++%3cstring+name%3d%22app_id%22%3e748014857772%3c%2fstring%3e%0d%0a++%3cstring+name%3d%22achievement_this_was_a_quicky%22%3eCgkIrNyjyeIVEAIQAQ%3c%2fstring%3e%0d%0a++%3cstring+name%3d%22achievement_speedy_hamster%22%3eCgkIrNyjyeIVEAIQAw%3c%2fstring%3e%0d%0a++%3cstring+name%3d%22achievement_threat_him_right%22%3eCgkIrNyjyeIVEAIQBA%3c%2fstring%3e%0d%0a++%3cstring+name%3d%22achievement_kaboom%22%3eCgkIrNyjyeIVEAIQBQ%3c%2fstring%3e%0d%0a++%3cstring+name%3d%22achievement_ready_for_launch%22%3eCgkIrNyjyeIVEAIQBg%3c%2fstring%3e%0d%0a++%3cstring+name%3d%22leaderboard_slamster_leaderboard_time_attack%22%3eCgkIrNyjyeIVEAIQAg%3c%2fstring%3e%0d%0a++%3cstring+name%3d%22leaderboard_slamster_leaderboard_wall_hits%22%3eCgkIrNyjyeIVEAIQBw%3c%2fstring%3e%0d%0a%3c%2fresources%3e%0d%0a
+and.ClientId=
+android.SetupDone=true

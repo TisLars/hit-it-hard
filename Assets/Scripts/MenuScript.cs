@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using UnityEngine.SocialPlatforms;
 
 public class MenuScript : MonoBehaviour {
 
@@ -18,14 +21,38 @@ public class MenuScript : MonoBehaviour {
     public GameObject settings;
     public GameObject TimeAttackSession;
 
-    void Start () {
+    void Start()
+    {
         playButton = playButton.GetComponent<Button>();
         timeAttackButton = timeAttackButton.GetComponent<Button>();
         volumeButton = volumeButton.GetComponent<Button>();
         tutorialButton = tutorialButton.GetComponent<Button>();
         settingsButton = settingsButton.GetComponent<Button>();
         exitButton = exitButton.GetComponent<Button>();
-	}
+
+        if (!PlayerPrefs.HasKey("volume"))
+        {
+            PlayerPrefs.SetInt("volume", 1);
+        }
+        else
+        {
+            if (PlayerPrefs.GetInt("volume") == 0)
+                Mute();
+        }
+
+        // GOOGLE PLAY SERVICES
+        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();
+
+        PlayGamesPlatform.InitializeInstance(config);
+        // recommended for debugging:
+        PlayGamesPlatform.DebugLogEnabled = true;
+        // Activate the Google Play Games platform
+        PlayGamesPlatform.Activate();
+        Social.localUser.Authenticate((bool success) => { });
+    }
+
+    public void ShowAchievements() { Social.ShowAchievementsUI(); }
+    public void ShowLeaderboard() { Social.ShowLeaderboardUI(); }
 
     public void GoToLevelMenu()
     {
@@ -59,7 +86,15 @@ public class MenuScript : MonoBehaviour {
     public void Mute()
     {
         isMute = !isMute;
-        AudioListener.volume = isMute ? 0 : 1;
+        if (isMute)
+        {
+            AudioListener.volume = 1;
+            PlayerPrefs.SetInt("volume", 1);
+        } else
+        {
+            AudioListener.volume = 0;
+            PlayerPrefs.SetInt("volume", 0);
+        }
     }
 
     public void ExitGame()
@@ -78,7 +113,7 @@ public class MenuScript : MonoBehaviour {
             settings.SetActive(false);
             main.SetActive(true);
         }
-        if (Input.GetButtonDown("Fire3"))
-            PlayerPrefs.DeleteAll();
+        //if (Input.GetButtonDown("Fire3"))
+        //    PlayerPrefs.DeleteAll();
     }
 }

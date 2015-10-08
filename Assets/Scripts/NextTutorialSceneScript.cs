@@ -5,7 +5,7 @@ public class NextTutorialSceneScript : MonoBehaviour {
 
     public int tutorialLevelNumber;
 
-	void OnMouseDown()
+	void OnMouseUp()
     {
         if(tutorialLevelNumber == 0)
         {
