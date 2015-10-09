@@ -1,13 +1,16 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using UnityEngine.SocialPlatforms;
 
 public class ScoreMenuScript : MonoBehaviour
 {
     private GameManagerScript manager = null;
     private TimeAttackSessionScript timeAttackSessionScript = null;
     private GameObject timeAttackSession;
-
+    
     public Button returnButton;
     private Text scoreText;
     private Text timerText;
@@ -30,8 +33,11 @@ public class ScoreMenuScript : MonoBehaviour
             SetTimerText();
             Destroy(timeAttackSession);
         }
-
+        
     }
+
+    public void ShowAchievements() { Social.ShowAchievementsUI(); }
+    public void ShowLeaderboard() { Social.ShowLeaderboardUI(); }
 
     void SetScoreText()
     {

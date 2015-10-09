@@ -14,7 +14,6 @@ public class ShootLogicTouchAreaScript : MonoBehaviour {
     {
         if(shoot.isShot)
         {
-            Debug.Log("HHHH");
             Destroy(gameObject);
         }
     }
