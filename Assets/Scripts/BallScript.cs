@@ -10,6 +10,7 @@ public class BallScript : MonoBehaviour {
     private GameManagerScript manager;
     private CameraShakeScript camShake;
     private ParticleSystem particle;
+    private UnityEngine.Object tapIndicator;
     private Camera cam;
     private Color current;
     private Color bgColor;
@@ -58,6 +59,7 @@ public class BallScript : MonoBehaviour {
 
     IEnumerator ActivateBoost()
     {
+        DestroyIndicator();
         GetComponent<TrailRenderer>().enabled = true;
         PlaySound(2);
         GetComponent<Rigidbody2D>().velocity *= 2;
@@ -169,7 +171,16 @@ public class BallScript : MonoBehaviour {
     {
         amountOfBoost = value;
     }
-    
+
+    private void ShowIndicator()
+    {
+        tapIndicator = Instantiate((GameObject)Resources.Load("TapIndicator"), new Vector3(transform.position.x + 8, 0f), Quaternion.identity);
+    }
+    private void DestroyIndicator()
+    {
+        Destroy(GameObject.Find("TapIndicator(Clone)"));
+    }
+
     void HitTop(int rotation)
     {
         switch (rotation)

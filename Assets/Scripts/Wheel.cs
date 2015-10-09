@@ -6,6 +6,7 @@ public class Wheel : MonoBehaviour {
 
     // Privates
     private Animator animator;
+    private GameObject wheel;
     private GameObject ball;
     private UnityEngine.Object tapIndicator;
     private Vector3 endPos;
@@ -35,7 +36,8 @@ public class Wheel : MonoBehaviour {
     public float WheelTouchEffectRotateSpeed = 0.1f;
 
     void Awake()
-    { 
+    {
+        wheel = GameObject.Find("Wheel");
         ball = GameObject.Find("Ball");
         animator = GetComponent<Animator>();
         animatorStartSpeed = animator.speed;
@@ -55,7 +57,7 @@ public class Wheel : MonoBehaviour {
         StartAnimator(); // Start animation.
         originGravityScale = coll.GetComponent<Rigidbody2D>().gravityScale;
         coll.GetComponent<Rigidbody2D>().gravityScale = 0;
-        tapIndicator = Instantiate((GameObject)Resources.Load("TapIndicator"), new Vector3(8, 0), transform.rotation);
+        tapIndicator = Instantiate((GameObject)Resources.Load("TapIndicator"), new Vector3(wheel.transform.position.x + 8, wheel.transform.position.y), Quaternion.identity);
         hamsterInWheel = true;
     }
 
