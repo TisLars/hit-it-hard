@@ -6,7 +6,9 @@ public class Wheel : MonoBehaviour {
 
     // Privates
     private Animator animator;
+    private GameObject wheel;
     private GameObject ball;
+    private UnityEngine.Object tapIndicator;
     private Vector3 endPos;
     private Vector3 startPos;
 
@@ -34,7 +36,8 @@ public class Wheel : MonoBehaviour {
     public float WheelTouchEffectRotateSpeed = 0.1f;
 
     void Awake()
-    { 
+    {
+        wheel = GameObject.Find("Wheel");
         ball = GameObject.Find("Ball");
         animator = GetComponent<Animator>();
         animatorStartSpeed = animator.speed;
@@ -54,20 +57,8 @@ public class Wheel : MonoBehaviour {
         StartAnimator(); // Start animation.
         originGravityScale = coll.GetComponent<Rigidbody2D>().gravityScale;
         coll.GetComponent<Rigidbody2D>().gravityScale = 0;
+        tapIndicator = Instantiate((GameObject)Resources.Load("TapIndicator"), new Vector3(wheel.transform.position.x + 8, wheel.transform.position.y), Quaternion.identity);
         hamsterInWheel = true;
-    }
-
-    void RotateHamster()
-    {
-        //if(turnDirection == RIGHT)
-        //{
-        //    ball.transform.Rotate(0, 0, (0 - (Time.deltaTime * 500)));
-        //}
-        //else
-        //{
-        //    ball.transform.Rotate(0, 0, Time.deltaTime * 500);
-        //}
-       
     }
 
     void StartAnimator()
@@ -91,6 +82,7 @@ public class Wheel : MonoBehaviour {
         Vector3 inputPosition = Input.mousePosition;
         Vector3 wheelPosition = Camera.main.WorldToScreenPoint(transform.position);
         Vector3 dir = (inputPosition - wheelPosition).normalized;
+        Destroy(tapIndicator);
         
         ball.GetComponent<Rigidbody2D>().AddForce(dir * (500f * shootAcceleration)); // Shoot it;
         

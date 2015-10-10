@@ -3,10 +3,10 @@ using System.Collections;
 
 public class RopeObjectScript : MonoBehaviour {
 
-    GameObject ball;
-    ShootLogicV3 shoot;
+    private GameObject ball;
+    private ShootLogicV3 shoot;
     private bool hasPlayer = false;
-    float originGravityScale;
+    private float originGravityScale;
 
     private float phase, time;
     public float timeToSwing = 1f;
@@ -75,7 +75,7 @@ public class RopeObjectScript : MonoBehaviour {
         endPos = transform.position;
         endPos.y -= 3.3f;
         endPos.x = endPos.x - 0.5f;
-        endPos.z = -1f;
+        endPos.z = 1f;
         
         isLerping = true;
     }
@@ -103,7 +103,7 @@ public class RopeObjectScript : MonoBehaviour {
             originGravityScale = ball.GetComponent<Rigidbody2D>().gravityScale;
 
             ball.GetComponent<Rigidbody2D>().gravityScale = 0;
-
+            
             //Destroy(coll.GetComponent<ShootLogicV3>());
             //coll.gameObject.AddComponent<ShootLogicV3>();
             //shoot = coll.GetComponent<ShootLogicV3>();

@@ -23,7 +23,7 @@ public class LevelScript : MonoBehaviour {
     void Awake()
     {
         levelText = GameObject.Find("LevelText");
-        levelTextPanel = GameObject.Find("LevelTextPanel");
+        levelTextPanel = GameObject.Find("ChicoWithTextBoard");
         
         ball = GameObject.Find("Ball");
         if (ball)
@@ -58,11 +58,13 @@ public class LevelScript : MonoBehaviour {
 
     void Update()
     {
+
         if (levelText != null && levelTextPanel != null && shootScript.isShot)
         {
             Destroy(levelText);
             Destroy(levelTextPanel);
         }
+
     }
     
     void setLevelIntroText()

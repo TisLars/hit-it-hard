@@ -12,7 +12,7 @@ public class ShootLogicV3 : MonoBehaviour {
     private float maxDragSqr;
 
     public bool isClicking;
-    private bool drawing;
+    public bool drawing;
     public bool isShot;
 
     private Vector2 prevVelocity;
