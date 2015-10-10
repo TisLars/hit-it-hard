@@ -31,6 +31,6 @@ public static class Achievements
         public const string leaderboard_slamster_leaderboard_time_attack = "CgkIrNyjyeIVEAIQAg"; // <GPGSID>
         public const string achievement_this_was_a_quicky = "CgkIrNyjyeIVEAIQAQ"; // <GPGSID>
         public const string achievement_speedy_hamster = "CgkIrNyjyeIVEAIQAw"; // <GPGSID>
-
+        public const string achievement_oh_my_god_hackz = "CgkIrNyjyeIVEAIQCA"; // <GPGSID>
 }
 
